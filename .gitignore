@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment variables — never commit real API keys
+.env
+
+# Trained models (these are generated, not source code)
+*.pkl
+
+# OS junk
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

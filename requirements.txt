@@ -1,0 +1,13 @@
+# Phase 1 dependencies only — we'll add more (langgraph, mcp, qdrant, etc.)
+# in Phase 2, and (torch, peft, bitsandbytes, etc.) in Phase 3.
+
+fastapi
+uvicorn[standard]
+pydantic
+scikit-learn
+pandas
+joblib
+groq
+streamlit
+python-dotenv
+pytest
