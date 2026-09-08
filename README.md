@@ -33,8 +33,8 @@ tests/
 
 macOS / Linux:
 ```
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv auditor
+source auditor/bin/activate
 ```
 
 Windows (PowerShell):
