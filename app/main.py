@@ -1,27 +1,51 @@
-"""
-main.py — the FastAPI app.
-
-Phase 1 job: expose ONE endpoint, POST /listings/audit, that:
-  1. takes a raw product listing (see schemas.py for the shape)
-  2. validates it (validation.py)
-  3. scores it with the classifier (classifier/predict.py)
-  4. if high risk, runs it through the fixed llm_audit.py pipeline
-  5. returns a report (report.py)
-
-Keep this file thin — it should mostly call other modules, not contain logic itself.
-"""
-
 from fastapi import FastAPI
+from schemas import ProductListing, AuditResult
+import json
+from pathlib import Path
 
-app = FastAPI(title="E-Commerce Agentic Audit")
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+app = FastAPI()
+
+# In-memory storage — a real database will replace this later.
+# This list lives OUTSIDE any function, so it persists across requests.
+stored_listings: list[ProductListing] = []
 
 
-@app.get("/health")
-def health_check():
-    """Simple check so you know the server is actually running."""
-    return {"status": "ok"}
+@app.on_event("startup")
+async def load_raw_listings():
+    with open(BASE_DIR / "raw_listings.json") as f:
+        raw_data = json.load(f)
+    for entry in raw_data:
+        try:
+            listing = ProductListing(**entry)
+            stored_listings.append(listing)
+        except Exception as e:
+            print(f"Skipped one bad listing: {e}")
+    print(f"Loaded {len(stored_listings)} listings from raw_listings.json")
 
 
-# TODO (Phase 1, build task 6): add the POST /listings/audit endpoint here,
-# once schemas.py, validation.py, classifier/predict.py, llm_audit.py,
-# and report.py each work on their own.
+@app.post("/listings/new_productlisting", response_model=ProductListing)
+async def new_product_listing(listing: ProductListing) -> ProductListing:
+    stored_listings.append(listing)
+    return listing
+
+
+@app.get("/listings/productlisting", response_model=ProductListing)
+async def get_product_listing() -> ProductListing:
+    return stored_listings[-1]  # the most recently added listing
+
+
+
+@app.post("/listings/audit", response_model=AuditResult)
+async def audit_listing(listing: ProductListing) -> AuditResult:
+    return AuditResult(
+        audit_id="temp-0001",
+        listing_gtin=listing.gtin,
+        verdict="compliant",
+        risk_type="none",
+        risk_score=0.0,
+        violations=[],
+        pipeline_stage="hygiene_check",
+        reasoning="Placeholder — no real audit logic implemented yet."
+    )
