@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from schemas import ProductListing, AuditResult
+from app.schemas import ProductListing, AuditResult
+from app.validation import validate_listing
 import json
 from pathlib import Path
 
@@ -23,6 +24,12 @@ async def load_raw_listings():
         except Exception as e:
             print(f"Skipped one bad listing: {e}")
     print(f"Loaded {len(stored_listings)} listings from raw_listings.json")
+
+
+@app.post("/listings/validate")
+async def validate_listing_endpoint(raw_listing: dict):
+    is_valid, errors = validate_listing(raw_listing)
+    return {"is_valid": is_valid, "errors": errors}
 
 
 @app.post("/listings/new_productlisting", response_model=ProductListing)

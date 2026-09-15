@@ -2,6 +2,8 @@
 schemas.py — the data shapes for this project.
 """
 
+import uuid
+from datetime import datetime
 from typing import Literal, Optional
 from pydantic import BaseModel, Field, model_validator
 
@@ -17,10 +19,12 @@ class BrandProfile(BaseModel):
 
 
 class ProductListing(BaseModel):
+    marketplace_id: str  # which marketplace this listing was submitted to
+    distributor_id: str  # which distributor (seller) under that marketplace submitted it
     title: str = Field(min_length=1)
     category: str
     price: float = Field(gt=0)
-    gtin: str = Field(pattern=r"^\d{13}$")
+    gtin: str = Field(pattern=r"^(\d{8}|\d{12}|\d{13}|\d{14})$")
     description: str = Field(min_length=1)
     product_specs: Optional[str] = None
     brand_profile: BrandProfile
@@ -54,25 +58,25 @@ class AuditResult(BaseModel):
     # listing_gtin, new audit_id) from the original. Not a government
     # Safety Gate alert number.
 
+    request_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    # output — generated here, not by the caller. UUID4 (not a sequential
+    # counter) so concurrent bulk uploads from multiple distributors never
+    # need a shared counter to avoid collisions. Identifies one audit
+    # attempt; a seller resubmitting a fixed listing gets a new request_id.
+
+    submitted_at: datetime = Field(default_factory=datetime.now)
+    # output — generated here. Orders multiple attempts on the same
+    # listing by time, independent of request_id/audit_id ordering.
+
     listing_gtin: str  # from input — identifies which ProductListing this audits
 
     verdict: Literal["compliant", "non_compliant", "escalated"]  # output
 
     risk_type: str
-    # output — short category label (e.g. "Electric shock", "Choking
-    # hazard"), set by the classifier/agent. Compulsory on every
-    # AuditResult, including a "compliant" verdict — callers pass the
-    # literal string "none" rather than omitting it, keeping this a
-    # plain required field instead of Optional handling downstream.
 
     risk_score: float = Field(ge=0.0, le=1.0)  # output
 
     violations: list[str] = Field(default_factory=list)
-    # output — simplified stand-in for real "legal provisions not
-    # complied with" (e.g. citing the Low Voltage Directive, EN
-    # 60335-1). Real standard-citation requires the RAG/hybrid-search
-    # rule lookup tool — Phase 2. For now, plain-language violation
-    # descriptions.
 
     pipeline_stage: Literal[
         "hygiene_check", "classifier", "investigator_agent", "reviewer_agent"
@@ -80,13 +84,6 @@ class AuditResult(BaseModel):
 
     reasoning: str  # output — free-text explanation of the verdict
 
-    # Deliberately NOT included, and why:
-    # - alert_number, notifying_country: these identify a government
-    #   Safety Gate filing; we don't file alerts, we produce internal
-    #   audit verdicts
-    # - measures_ordered, date_of_entry_into_force: legal enforcement
-    #   actions are outside an audit tool's authority — out of scope
-    #   by design, not a missing feature
 
     @model_validator(mode="after")
     def check_risk_type_matches_verdict(self) -> "AuditResult":
