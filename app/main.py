@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from app.recall_check import check_blacklist
 from app.schemas import ProductListing, AuditResult
 from app.validation import validate_listing
@@ -43,7 +43,9 @@ async def new_product_listing(listing: ProductListing) -> ProductListing:
 
 @app.get("/listings/productlisting", response_model=ProductListing)
 async def get_product_listing() -> ProductListing:
-    return stored_listings[-1]  # the most recently added listing
+    if not stored_listings:
+        raise HTTPException(status_code=404, detail="No listings have been submitted yet")
+    return stored_listings[-1]
 
 
 
