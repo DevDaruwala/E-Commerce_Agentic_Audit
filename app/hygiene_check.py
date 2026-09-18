@@ -19,7 +19,6 @@ def check_hygiene(listing: ProductListing) -> AuditResult | None:
     or a non_compliant AuditResult if it fails.
     """
     violations = []
-
     if listing.brand_profile.responsible_person_name is None:
         violations.append("Missing responsible person name")
     if listing.brand_profile.responsible_person_address is None:

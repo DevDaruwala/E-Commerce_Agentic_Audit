@@ -79,7 +79,7 @@ class AuditResult(BaseModel):
     violations: list[str] = Field(default_factory=list)
 
     pipeline_stage: Literal[
-        "hygiene_check", "classifier", "investigator_agent", "reviewer_agent"
+        "hygiene_check", "classifier", "investigator_agent", "reviewer_agent", "recall_check"
     ]  # output — which stage of the pipeline produced this verdict
 
     reasoning: str  # output — free-text explanation of the verdict

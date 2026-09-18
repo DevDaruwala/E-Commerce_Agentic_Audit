@@ -1,6 +1,9 @@
 from fastapi import FastAPI
+from app.recall_check import check_blacklist
 from app.schemas import ProductListing, AuditResult
 from app.validation import validate_listing
+from app.hygiene_check import check_hygiene
+import uuid  # add this to your imports at the top
 import json
 from pathlib import Path
 
@@ -46,13 +49,21 @@ async def get_product_listing() -> ProductListing:
 
 @app.post("/listings/audit", response_model=AuditResult)
 async def audit_listing(listing: ProductListing) -> AuditResult:
+    blacklist_result = check_blacklist(listing.gtin)
+    if blacklist_result is not None:
+        return blacklist_result
+
+    hygiene_result = check_hygiene(listing)
+    if hygiene_result is not None:
+        return hygiene_result
+
     return AuditResult(
-        audit_id="temp-0001",
+        audit_id=str(uuid.uuid4()),
         listing_gtin=listing.gtin,
         verdict="compliant",
         risk_type="none",
         risk_score=0.0,
         violations=[],
         pipeline_stage="hygiene_check",
-        reasoning="Placeholder — no real audit logic implemented yet."
+        reasoning="Passed hygiene check — no downstream classifier wired yet.",
     )
