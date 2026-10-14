@@ -1,7 +1,7 @@
 # Session Log — catching up on this session's work
 
 *Chronological recap of what changed in this session and why. Not a
-permanent design doc (that's `FIELD_DECISIONS.md` / `DATASET_STRATEGY.md`)
+permanent design doc (that's `FIELD_DECISIONS.md` / `Dataset_Strategy.md`)
 — just a catch-up reference.*
 
 ---
@@ -11,7 +11,7 @@ permanent design doc (that's `FIELD_DECISIONS.md` / `DATASET_STRATEGY.md`)
 First pass: 30 synthetic listings, flat schema (no `brand_profile`
 nesting), categories guessed from an early draft of the dataset strategy.
 
-Second pass: regenerated from scratch once `DATASET_STRATEGY.md` and
+Second pass: regenerated from scratch once `Dataset_Strategy.md` and
 `FIELD_DECISIONS.md` were revised with real data:
 - 5 categories, weighted by real EU Safety Gate alert share: **Cosmetics
   10, Toys 6, Electronics 6, Baby/Childcare 4, Clothing 4**
@@ -127,3 +127,11 @@ it was only available transitively before.
 safety warning / CE marking populated) is next, followed by pulling the
 real RAPEX + McAuley dataset, `recall_check.py`, the classifier, and
 `llm_audit.py`.
+
+## 2026-10-14 — classifier cut from design entirely
+
+Decided to skip the ML risk classifier and go straight from
+`hygiene_check.py` to the agent team (training data had source-style
+leakage). `classifier_training_data.csv` renamed to `agent_eval_set.csv`
+and repurposed as the agent's evaluation set. See `STATUS_CHECK.md`
+and this session's commits for details.

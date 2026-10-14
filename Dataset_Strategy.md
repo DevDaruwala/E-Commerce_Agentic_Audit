@@ -1,10 +1,13 @@
 # Dataset Strategy — E-Commerce Agentic Audit
 
-*Reference doc. Read this before building the benchmark or training the
-classifier. Revised: category list updated from placeholder guesses to
-real EU Safety Gate alert data; schema structure updated to reflect
-brand-level vs. article-level fields. No change to the three-tier
-pipeline or system architecture below.*
+*Reference doc. Read this before building the benchmark or the agent's
+evaluation set. Revised: category list updated from placeholder
+guesses to real EU Safety Gate alert data; schema structure updated to
+reflect brand-level vs. article-level fields. Superseded: the ML
+classifier that used to sit between the hygiene check and the agent is
+cut from the design entirely (training data had source-style leakage)
+— see the "Evaluation rules" section below for what this means for
+`agent_eval_set.csv`.*
 
 ---
 
@@ -20,7 +23,8 @@ findable with a better search.
 **The strategy:** real product content (title, description, brand,
 category, images) from real sources + honestly-labeled synthetic
 compliance fields on top, with a hygiene-check tier that prevents the
-synthetic fields from becoming a shortcut the classifier exploits.
+synthetic fields from becoming a shortcut the agent's evaluation could
+be passed through.
 
 ---
 
@@ -140,8 +144,8 @@ marketplace data includes dozens of category-specific attributes
 irrelevant outside their own category (UPF rating for sunglasses,
 energy class for major appliances). Building per-category schemas
 (discriminated unions) to properly type these is deferred past Phase 1
-— added complexity across the classifier, hygiene check, and agent
-logic outweighs the benefit right now. Raw data may still carry such
+— added complexity across the hygiene check and agent logic outweighs
+the benefit right now. Raw data may still carry such
 fields as noise (`ProductListing` doesn't declare them, so Pydantic
 drops them automatically), or — where worth preserving for future
 analysis — they land in an open `category_attributes: dict` field. Full
@@ -149,28 +153,69 @@ per-field reasoning lives in `FIELD_DECISIONS.md`.
 
 ---
 
-## The three-tier structure per listing (unchanged)
+## The pipeline structure per listing (revised — classifier cut)
 
-1. **Hygiene check (deterministic, cheap):** is the Responsible
+1. **Recall check (deterministic, cheap):** exact GTIN/EAN match
+   against a known EU Safety Gate recall. Match → instant reject, no
+   ML or LLM needed.
+2. **Hygiene check (deterministic, cheap):** is the Responsible
    Person, safety warning, and CE marking field populated at all?
    Missing → instant fail, no ML or LLM needed.
-2. **ML classifier (real signal):** trained on category, description,
-   and risk-indicator features — must NOT be trainable on "field
-   present/absent" alone, or it just learns the hygiene check's job
-   instead of real risk patterns.
-3. **Agent investigation:** for genuinely ambiguous, substantive risk
+3. **Agent investigation:** for every listing that clears both checks
+   above — there's no risk-tier classifier left to split "low risk"
+   from "high risk," so every listing gets the same investigation
    (the product might have every procedural field correct and still
    be physically dangerous — see the EZRA charger example below).
+
+**Superseded:** an "ML classifier (real signal)" tier used to sit
+between hygiene and agent investigation, trained on category,
+description, and risk-indicator features. It's cut from the design
+entirely — the training data built for it turned out to have
+source-style leakage. The 500-row dataset survives as the agent's
+evaluation set instead (see "Evaluation rules" below).
 
 **Rule to avoid the trap:** synthetic field presence/absence must vary
 independently of the safe/unsafe label. Some safe listings should also
 be missing a minor field; some unsafe listings should have everything
-procedurally correct. Otherwise the classifier just learns "empty
-field = unsafe," which is a shortcut, not real learning. This
-independence rule applies to both the real dataset and any raw/
+procedurally correct. This independence rule's purpose has shifted
+with the classifier's removal: it's no longer about preventing a
+classifier from learning "empty field = unsafe" as a shortcut — it's
+so the **agent's evaluation** can't be passed through that same
+shortcut instead. The rule itself is unchanged; only why it matters
+has changed. It applies to both the real dataset and any raw/
 synthetic test data generated for schema testing.
 
 ---
+
+## Evaluation rules — `agent_eval_set.csv`
+
+This 500-row dataset (50 unsafe + 50 safe per category, across 5
+categories) was originally built as classifier training data. With the
+classifier cut from the design, it's repurposed as the agent's
+**evaluation set** — something to measure the agent against, not
+something it ever trains on.
+
+- **Strip `source_id` and `is_unsafe` before the agent sees a row.**
+  `source_id` is a perfect label giveaway on the unsafe side — every
+  unsafe row's `source_id` is a RAPEX `alert_reference` in
+  `PREFIX/NNNNN/YY` format (contains a `/`), while every safe row's
+  `source_id` is a McAuley ASIN/parent_asin (no `/`). An agent that
+  ever sees this column doesn't need to reason about anything else.
+- **Known leakage limits to report alongside any eval results, not
+  treated as solved:** `price` (McAuley-real on the safe side,
+  synthetically backfilled on ~77% of rows depending on category;
+  RAPEX never has it on the unsafe side), `country_of_origin` (same
+  asymmetry), and description *style* — confirmed by direct
+  measurement, unsafe descriptions run much shorter (median 79 chars)
+  than safe ones (median 526 chars after the 20-char McAuley floor),
+  because RAPEX alert text and McAuley product copy are written for
+  different purposes. An agent could learn "short description = risky"
+  without ever reasoning about actual content.
+- **The agent's future similar-recalls retrieval index must NOT
+  contain the weeks-52-104 RAPEX alerts used to build this evaluation
+  set** — only `rapex_blacklist.json` (weeks 0-51) or a fresh pull may
+  feed that index. Otherwise the agent could retrieve the exact
+  eval-set row it's being tested on as its own "evidence."
 
 ## Worked example — from a real McAuley record to a ProductListing
 

@@ -11,8 +11,9 @@ from app.schemas import ProductListing
 
 
 def fetch_rules(listing: ProductListing):
-    """TODO: call the Groq API with the listing's category, asking
-    what GPSR rules apply. Keep the prompt simple for now — no vector
+    """TODO: call the Gemini API (primary; Groq documented as an
+    evaluated alternative) with the listing's category, asking what
+    GPSR rules apply. Keep the prompt simple for now — no vector
     search yet, that's Phase 2."""
     raise NotImplementedError
 

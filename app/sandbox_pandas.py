@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-df = pd.read_csv(BASE_DIR / "data" / "classifier_training_data.csv")
+df = pd.read_csv(BASE_DIR / "data" / "agent_eval_set.csv")
 
 print(df.head())
 print(df.info())

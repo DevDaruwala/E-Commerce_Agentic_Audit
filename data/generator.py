@@ -5,7 +5,7 @@ by writing a few listings by hand first.
 Phase 1, build task 3: write 4-5 listings yourself directly in
 mock_list.json (a couple of each violation type) BEFORE running this
 script to generate more. You need to understand what you're asking
-the classifier to learn.
+the agent to reason about.
 """
 
 import json

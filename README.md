@@ -1,8 +1,10 @@
 # E-Commerce Agentic Audit
 
 An autonomous EU product-safety (GPSR) compliance auditor. A product
-listing goes through validation, a risk classifier, and (for higher-risk
-items) an agentic audit team, ending in a compliance report.
+listing goes through validation, a recall check, a hygiene check, and
+an agentic audit team (every listing that clears both — no risk-tier
+classifier, that slot is cut from the design; see `master_plan.md`),
+ending in a compliance report.
 
 **Status: Phase 1 — building the foundation** (no agent yet, on purpose).
 See the project's 3-phase plan for what comes next.
@@ -13,16 +15,17 @@ See the project's 3-phase plan for what comes next.
 app/
   main.py            FastAPI app — the one entry point
   schemas.py         Data shapes: ProductListing, AuditResult
-  validation.py       Checks a listing is complete before anything else runs
-  classifier/
-    train.py           Trains the risk classifier
-    predict.py          Scores a single listing
-  llm_audit.py        Phase 1: fixed 3-step check (becomes an agent in Phase 2)
-  report.py           Turns a verdict into the final report
-  dashboard.py        Bare Streamlit UI
+  validation.py      Checks a listing is complete before anything else runs
+  hygiene_check.py   GPSR compliance-completeness checks
+  recall_check.py    Step 0 instant blacklist match (RAPEX-seeded)
+  llm_audit.py       Phase 1: fixed 3-step check (becomes an agent in Phase 2)
+  report.py          Turns a verdict into the final report
+  dashboard.py       Bare Streamlit UI
 data/
-  generator.py         Scales up synthetic training data
-  mock_list.json         The synthetic listings themselves
+  fetch_rapex.py         Pulls real EU Safety Gate alert data
+  rapex_blacklist.json   Barcode-bearing alerts for recall_check.py
+  build_eval_dataset.py  Builds the agent's evaluation set
+  agent_eval_set.csv     The agent's evaluation set (not training data)
 tests/
   test_validation.py     Starter tests
 ```
@@ -52,7 +55,7 @@ pip install -r requirements.txt
 ```
 cp .env.example .env
 ```
-Then open `.env` and paste in your real Groq API key.
+Then open `.env` and paste in your real Gemini API key.
 
 ## Running it (once Phase 1 is built out)
 

@@ -49,7 +49,7 @@ and understood.
 
 Claude Code can run `git` commands for you (it already sees your repo
 since it's just a folder with `.git` in it) — but per your own
-`GIT_GITHUB_101.md` rules: **ask it to show you the diff and propose
+`Git_Github_101.md` rules: **ask it to show you the diff and propose
 a commit message, and you decide whether to approve the commit** —
 don't let it commit and push silently. This keeps you the one who
 understands what's in every commit, which is the whole point of the
@@ -74,6 +74,6 @@ without you re-explaining it each time. See the one provided
 alongside this guide — drop it straight into your project root.
 
 **Keep `CLAUDE.md` short.** It's read every single session, so it's
-not the place to paste your whole `MASTER_PLAN.md` — just enough to
+not the place to paste your whole `master_plan.md` — just enough to
 point Claude Code at the right files and set expectations, which is
 exactly what the provided one does.

@@ -80,34 +80,36 @@ Step 1 -- Hygiene check (deterministic)
    safety warning, CE marking field)? Missing -> instant fail.
       |
       v
-Step 2 -- ML risk classifier (LightGBM / scikit-learn)
+Audit agent team -- Phase 2. Every listing that passes Steps 0-1
+(no risk-tier split — there's no classifier to score one).
+   Investigator agent (ReAct, LangGraph)
       |
-  +---+----+
- Low risk  High risk
-   |          |
-   |          v
-   |     Investigator agent (ReAct, LangGraph) -- Phase 2
-   |          |
-   |     MCP tool server:
-   |       - Category -> directive mapping (RAG / GraphRAG)
-   |       - Hybrid rule search (Qdrant + BM25)
-   |       - Vision + OCR label check (Florence-2, Qwen2.5)
-   |          |
-   |     Evidence bundle
-   |          |
-   +----+-----+
-        v
-  Reviewer agent (common sanity gate for BOTH paths) -- Phase 2
-        |
+   MCP tool server:
+      - Category -> directive mapping (RAG / GraphRAG)
+      - Hybrid rule search (Qdrant + BM25)
+      - Vision + OCR label check (Florence-2, Qwen2.5)
+      |
+   Evidence bundle
+      |
+   Reviewer agent -- Phase 2
+      |
    +----+----+
  Confirm   Escalate -> human review queue
    |
    v
-Report writer (fine-tuned, quantized model -- Phase 3)
+Report writer (Gemini, prompted -- Phase 2)
    |
    v
 Compliance report -> Streamlit dashboard
 ```
+
+**Note on `classifier_training_data.csv` / `agent_eval_set.csv`:** the
+ML risk classifier that used to sit between Step 1 and the agent team
+is cut from the design entirely (not deferred — the training data had
+source-style leakage). The 500-row dataset built for it is repurposed
+as the agent's evaluation set instead of being discarded. See
+`Dataset_Strategy.md`'s "Evaluation rules" section for what the
+evaluation harness must strip before the agent sees a row.
 
 **Important nuance already settled:** a printed CE mark being visible
 in a photo does NOT mean the product is compliant (real example: EZRA
@@ -117,7 +119,7 @@ whole audit; it always needs the rule-lookup tool alongside it. Use
 this example if the person ever asks "why do we need multiple tools
 instead of just checking the image."
 
-## 4. Dataset strategy (settled — see `DATASET_STRATEGY.md` in repo)
+## 4. Dataset strategy (settled — see `Dataset_Strategy.md` in repo)
 
 - **Unsafe (15):** real EU Safety Gate/RAPEX alert records.
 - **Safe (15):** McAuley Amazon Review Data (UCSD), filtered to
@@ -135,35 +137,36 @@ instead of just checking the image."
   CE marking status, safety warning text) — none exist because the
   regulation is too new. These are added as clearly-labeled synthetic
   fields, **varied independently of the safe/unsafe label** so the
-  classifier can't just learn "field missing = unsafe" as a shortcut.
+  agent's evaluation can't be passed through a shortcut (e.g. learning
+  "field missing = unsafe" instead of actually reasoning about risk).
   This independence rule is important — don't let it get lost if the
   person proposes a shortcut later.
 
 ## 5. Tech stack
 
-FastAPI, Pydantic, scikit-learn/LightGBM, LangGraph, FastMCP, Groq API
-(Llama), Florence-2 + Qwen2.5 (vision/OCR), Qdrant + BM25 (hybrid
-search), Neo4j (graph, if GraphRAG chosen — still an open decision for
-Phase 2), SQLite (recall DB), QLoRA + GGUF quantization (Phase 3 report
-writer), Langfuse (tracing), Streamlit (frontend), Docker, GitHub
-Actions, Azure Container Apps + Blob Storage (deployment).
+FastAPI, Pydantic, LangGraph, FastMCP, Gemini API (primary; Groq
+documented as an evaluated alternative), Florence-2 + Qwen2.5
+(vision/OCR), Qdrant + BM25 (hybrid search), Neo4j (graph, if
+GraphRAG chosen — still an open decision for Phase 2), SQLite (recall
+DB), Langfuse (tracing), Streamlit (frontend), Docker, GitHub Actions,
+Azure Container Apps + Blob Storage (deployment). (QLoRA + GGUF
+quantization for the report writer is cut from scope — it's Gemini,
+prompted, not fine-tuned.)
 
 ## 6. The 3-phase plan (corrected boundary — important)
 
-**Phase 1 = the whole system connected end-to-end, simplest version of
-every piece.** Includes a first working (dumb) classifier and a fixed,
-non-agentic 3-step LLM check. Not just "scaffolding" — a real working
-system by the end.
+**Phase 1 = the whole deterministic half connected end-to-end**:
+recall check, hygiene check, schemas, a fixed non-agentic 3-step LLM
+check as a placeholder for the real agent. No classifier — that slot
+was cut from the design (training data had source-style leakage).
+Not just "scaffolding" — a real working system by the end.
 
-**Phase 2 = upgrading two specific pieces**: fixed LLM check → real
-ReAct agent; plain lookup → hybrid/graph retrieval + a reviewer agent
-that checks BOTH the full-investigation path and the classifier's
-"low risk" bypass path (confirmed decision — low risk items skip the
-investigator/tools but still get a lightweight reviewer check, so
-nothing reaches the final report completely unchecked).
+**Phase 2 = upgrading the fixed LLM check into a real ReAct agent**,
+with hybrid/graph retrieval tools and a reviewer agent that checks
+every listing that reaches it — single path, no bypass (there's no
+risk tier to bypass with, now that the classifier is gone).
 
-**Phase 3** = QLoRA fine-tuned + quantized report-writer model, Docker,
-CI/CD, Azure deployment, MLOps versioning.
+**Phase 3** = Docker, CI/CD, Azure deployment, MLOps versioning.
 
 Every phase has a **mandatory fail-forward exercise** — a deliberate,
 on-purpose failure to learn from. Don't let a phase get marked done
@@ -173,9 +176,9 @@ without one.
 `main.py` (finish) → `validation.py` (structural checks) →
 `hygiene_check.py` (compliance-completeness checks) → **pull the real
 dataset** (RAPEX + McAuley, per Section 4) → `recall_check.py`
-(barcode blacklist, built from the RAPEX half) → classifier
-(`train.py`/`predict.py`) → `llm_audit.py` (fixed 3-step) →
-`report.py` + `dashboard.py` → full integration.
+(barcode blacklist, built from the RAPEX half) → `llm_audit.py`
+(fixed 3-step, placeholder for the Phase 2 agent) → `report.py` +
+`dashboard.py` → full integration.
 
 **Week 1 focus specifically:** `main.py` → `validation.py` →
 `hygiene_check.py`, proven on ONE hand-typed real listing (not the
@@ -189,10 +192,10 @@ into it of any phase.
 ## 7. Documents already in the repo — read these, don't re-derive them
 
 - `README.md` — project overview, setup instructions
-- `GIT_GITHUB_101.md` — the person's Git reference (they're a Git
+- `Git_Github_101.md` — the person's Git reference (they're a Git
   beginner; refer to this before explaining Git concepts from scratch)
-- `MASTER_PLAN.md` — the fuller version of Sections 3, 4, 6 above
-- `DATASET_STRATEGY.md` — full version of Section 4, with a worked
+- `master_plan.md` — the fuller version of Sections 3, 4, 6 above
+- `Dataset_Strategy.md` — full version of Section 4, with a worked
   example (a real McAuley "Girls Ballet Tutu" record mapped field by
   field into `ProductListing`)
 
@@ -212,11 +215,14 @@ from a fixed pipeline into a real agent + reviewer; the dataset
 strategy was completely reworked (see Section 4) after the person
 correctly pushed back multiple times on data quality concerns.
 
+**Superseded:** classifier removed from the design (training data had
+source-style leakage) — see Section 3's current architecture.
+
 ## 9. Immediate next step when this session resumes
 
 Check whether `schemas.py` (real fields for `ProductListing` and
 `AuditResult`) got written in the prior session. If yes, move to
 finishing `main.py`. If no, that's where to pick up — help them write
-`schemas.py` using the field list from `DATASET_STRATEGY.md`,
+`schemas.py` using the field list from `Dataset_Strategy.md`,
 explaining the Pydantic/OOP syntax as you go rather than just handing
 over finished code.

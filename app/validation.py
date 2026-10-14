@@ -1,11 +1,11 @@
 """
 validation.py — checks a listing is complete and well-formed BEFORE it
-reaches the classifier or the LLM. This is what saves you from wasting
+reaches the agent or the LLM. This is what saves you from wasting
 compute on garbage input.
 
 Phase 1, build task 2: write this, then test it by hand against 3
 deliberately broken listings (missing field, wrong type, empty string)
-before touching the classifier at all.
+before touching anything downstream.
 """
 
 from pydantic import ValidationError

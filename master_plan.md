@@ -85,35 +85,29 @@ Step 1 -- Hygiene check           Immediate REJECT ---------+
    complete                        missing                   |
       |                                |                     |
       v                                v                     |
-Step 2 -- ML risk classifier      Instant FAIL ---------------+
-  (LightGBM / scikit-learn)        (reason recorded,          |
-      |                             no LLM needed)            |
-  +---+----+                                                  |
- low risk  high risk                                          |
-   |          |                                               |
-   |          v                                               |
-   |     Investigator agent (ReAct)                           |
-   |          |                                               |
-   |     MCP tool server:                                     |
-   |       - Category -> directive mapping (RAG / GraphRAG,   |
-   |         deferred, see Section 9/10)                      |
-   |       - Hybrid rule search (Qdrant + BM25)                |
-   |       - Vision + OCR label check (Florence-2, Qwen2.5)    |
-   |          |                                                |
-   |     Evidence bundle                                       |
-   |          |                                                |
-   +----+-----+                                                |
-        v                                                      |
-  Reviewer agent (common sanity gate for BOTH paths)            |
-        |                                                       |
+Audit agent team                  Instant FAIL ---------------+
+  (every listing that reaches       (reason recorded,          |
+   here -- no risk-tier split,       no LLM needed)            |
+   no classifier to score one)                                 |
+      |                                                        |
+   Investigator agent (ReAct)                                  |
+      |                                                        |
+   MCP tool server:                                            |
+      - Category -> directive mapping (RAG / GraphRAG,         |
+        deferred, see Section 9/10)                            |
+      - Hybrid rule search (Qdrant + BM25)                      |
+      - Vision + OCR label check (Florence-2, Qwen2.5)          |
+      |                                                         |
+   Evidence bundle                                              |
+      |                                                         |
+   Reviewer agent                                               |
+      |                                                         |
    +----+----+                                                  |
  confirm   escalate                                             |
    |            |                                               |
    v            v                                               |
 Report writer  Human review queue                                |
-(Gemini Flash;                                                   |
- fine-tune + quantize                                            |
- planned, not built)                                             |
+(Gemini, prompted)                                                |
    |                                                             |
    v                                                             |
    +------------------------------+----------------------------+
@@ -130,32 +124,31 @@ Report writer  Human review queue                                |
 ```
 
 **Why the blacklist check sits before everything else:** it's an
-exact database lookup — cheaper than even the classifier. If a
-product is already a known recall, there's no need to classify,
-investigate, or call an LLM at all. This is the same "cheapest check
-first" principle behind the whole triage design — the hygiene check
-sits at that same cheap-deterministic tier, one step later, for the
-same reason: no point running the classifier or an LLM on a listing
-that's missing mandatory fields.
+exact database lookup — cheaper than any LLM call. If a product is
+already a known recall, there's no need to investigate or call an LLM
+at all. This is the same "cheapest check first" principle behind the
+whole triage design — the hygiene check sits at that same
+cheap-deterministic tier, one step later, for the same reason: no
+point running an LLM on a listing that's missing mandatory fields.
 
-**Why the reviewer checks both paths:** covered in detail earlier —
-the classifier can be wrong, so nothing should reach the final report
-completely unchecked, even if the "low risk" check is much lighter
-than the full investigation.
+**Why the reviewer checks every listing that reaches it:** there's no
+risk tier to bypass — the ML classifier that would have produced one
+is cut from the design entirely (training data had source-style
+leakage; see `Dataset_Strategy.md`). Every listing the agent
+investigates gets the same reviewer sanity gate before anything
+reaches the final report.
 
 ## 5. Tech stack
 
 | Layer | Tool |
 |---|---|
 | Backend | FastAPI, Pydantic |
-| Risk classifier | scikit-learn or LightGBM |
 | Agent orchestration | LangGraph |
 | Tool protocol | FastMCP (MCP SDK) |
 | Reasoning model | Google Gemini (Flash) — primary; Groq documented as an evaluated alternative (faster, but tighter free daily token cap) |
 | Vision + OCR | Florence-2, Qwen2.5 |
 | Retrieval | Qdrant + BM25 (hybrid), Neo4j (graph, if we go GraphRAG) |
 | Recall database | SQLite, seeded from RAPEX open data |
-| Fine-tuning | QLoRA on Colab, GGUF quantization |
 | Tracing | Langfuse |
 | Frontend | Streamlit |
 | Deployment | Docker, GitHub Actions, Azure Container Apps, Azure Blob Storage |
@@ -165,9 +158,15 @@ graph (Neo4j, more advanced, more setup) or a simpler flat hybrid
 search (matches Audit_Core.pdf's simpler suggestion). We'll decide
 this concretely at the start of Phase 2.
 
-**Deferred, not active:** GraphRAG (Neo4j) and QLoRA fine-tuning/
-quantization are deferred — see Section 9/10 — hybrid search only and
-Gemini prompting only are what's actually being built.
+**Cut from scope entirely (not deferred):** the ML risk classifier
+(scikit-learn/LightGBM) is removed from the design after its training
+data turned out to have source-style leakage (see `Dataset_Strategy.md`).
+The 500-row dataset built for it is repurposed as the agent's
+evaluation set instead. QLoRA fine-tuning/quantization for the report
+writer is also cut — it's Gemini, prompted, not fine-tuned.
+
+**Deferred, not active:** GraphRAG (Neo4j) — see Section 9/10; hybrid
+search only is what's actually being built for Phase 2.
 
 ---
 
@@ -190,18 +189,17 @@ Gemini prompting only are what's actually being built.
    `Dataset_Strategy.md`.
 5. `recall_check.py` — the Step 0 instant blacklist match against the
    RAPEX-seeded SQLite table.
-6. Train the dumbest working classifier (logistic regression or
-   LightGBM, a few features) on the benchmark.
-7. `llm_audit.py` — fixed 3-step pipeline (no agent logic yet).
-8. Wire it behind one FastAPI endpoint + a bare Streamlit page.
+6. `llm_audit.py` — fixed 3-step pipeline (no agent logic yet; stands
+   in for the real agent until Phase 2).
+7. Wire it behind one FastAPI endpoint + a bare Streamlit page.
 
 **Done so far (Week 1):** `schemas.py` and `app/main.py` (FastAPI
 skeleton, startup loading from `raw_listings.json`, basic CRUD +
 placeholder audit endpoint).
 
 **Fail-forward exercise:** feed it a listing with a missing field, a
-dead image URL, and one sitting exactly on the classifier's decision
-boundary. Fix only what actually breaks.
+dead image URL, and one that's hygiene-complete but still physically
+dangerous. Fix only what actually breaks.
 
 **Definition of done:** a real verdict, with a cited reason, on a real
 recalled product and a real compliant one — not just synthetic
@@ -210,15 +208,16 @@ placeholders.
 ## 7. Phase 2 — Agentic + smarter retrieval
 
 **Focus:** turn the fixed pipeline into a real agent, add hybrid
-search/graph retrieval, add the reviewer agent (checking both the
-audit path and the classifier's "low risk" path).
+search/graph retrieval, add the reviewer agent (checking every
+listing that reaches it — single path, no bypass; there's no risk
+tier to bypass with).
 
 **Build tasks:**
 1. Write the agent's decision logic in plain English before touching
    LangGraph.
 2. Build the MCP tool server, one tool at a time — hybrid search
    first, then category mapping, then vision+OCR.
-3. Add the reviewer agent and the low-risk bypass path.
+3. Add the reviewer agent.
 4. Add Langfuse tracing once the agent already works.
 
 **Deferred:** GraphRAG is cut from active scope — hybrid search
@@ -232,24 +231,25 @@ instead of hallucinating a confident answer.
 
 **Definition of done:** the agent visibly skips tools it doesn't need,
 the reviewer catches at least one deliberately-planted bad verdict,
-and both the audit path and the bypass path reach the reviewer.
+and every listing that reaches the reviewer gets checked before the
+final report.
 
 ## 8. Phase 3 — Make it real
 
-**Focus:** a small fine-tuned report-writing model, proper testing,
-and a real cloud deployment.
+**Focus:** a prompted (not fine-tuned) report-writing model, proper
+testing, and a real cloud deployment.
 
 **Build tasks:**
-1. Write 20–30 example reports by hand, then QLoRA fine-tune + quantize
-   a small model on Colab.
+1. Write 20–30 example reports by hand to prompt-engineer the Gemini
+   report writer against.
 2. Build and test the Dockerfile locally before any CI/CD.
 3. GitHub Actions: tests first, deployment step second.
 4. Deploy to Azure Container Apps; reports/images in Azure Blob
    Storage.
 
-**Deferred:** QLoRA fine-tuning/quantization is deferred to future
-work — documented design (see Section 5's tech stack note), not
-built.
+**Cut from scope:** QLoRA fine-tuning/quantization for the report
+writer — see Section 5's tech stack note. Gemini, prompted, is the
+whole plan; there's no model to fine-tune.
 
 **Fail-forward exercise:** deliberately break the Docker build and the
 CI pipeline once each, on purpose, and practice reading the failure.
@@ -264,16 +264,17 @@ CI runs automatically, the system is live at a real Azure URL.
 **Worth adopting as-is:**
 - The real RAPEX + Open Products Facts data strategy (verified
   accessible — see Section 3).
-- The instant blacklist match as a Step 0, before the classifier.
+- The instant blacklist match as a Step 0, before any LLM call.
 - The specific legal-hygiene fields (EU Responsible Person, DoC, CE
   mark, language warnings) — good input for `schemas.py`.
 
 **Worth treating as a starting guess, not a fixed fact:**
-- The **0.35 risk threshold** — this should be *chosen* through the
-  validation sweep we discussed (find the lowest threshold that lets
-  zero real violations slip through on the benchmark), not assumed
-  upfront. Audit_Core.pdf states it as if already decided; treat it
-  as a placeholder until we actually test it.
+- The **0.35 risk threshold** — Audit_Core.pdf states this as an
+  already-decided classifier confidence cutoff for the low/high-risk
+  split. Moot now: the classifier (and the risk tier it would have
+  produced) is cut from the design entirely, so there's no score left
+  to threshold. Noted here only so a future re-read of Audit_Core.pdf
+  doesn't resurrect it as a live decision.
 - Whether category mapping is a knowledge graph or flat hybrid search
   — Audit_Core.pdf implies the simpler option; we still have this as
   an open decision for Phase 2.
@@ -283,9 +284,9 @@ CI runs automatically, the system is live at a real Azure URL.
 ## 10. Actors & Extensibility — Future Scaling (not built)
 
 **Status: documentation of reasoning only.** Same treatment as the
-GraphRAG and QLoRA notes elsewhere in this file — a designed-but-
-deferred decision, not a to-do. The current build uses the simple
-version: a flat `marketplace_id` / `distributor_id` string pair on
+GraphRAG note elsewhere in this file — a designed-but-deferred
+decision, not a to-do. The current build uses the simple version: a
+flat `marketplace_id` / `distributor_id` string pair on
 `ProductListing`, no pairwise derivation, no product/listing split.
 See `FIELD_DECISIONS.md`'s "Submission-level fields" section for what
 actually exists today.
