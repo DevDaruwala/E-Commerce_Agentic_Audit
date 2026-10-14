@@ -6,6 +6,7 @@ uvicorn[standard]
 pydantic
 scikit-learn
 pandas
+pyarrow
 joblib
 groq
 streamlit
