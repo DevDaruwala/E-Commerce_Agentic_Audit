@@ -178,9 +178,11 @@ root.
 | `app/validation.py` | Done. `validate_listing(raw_dict) -> (bool, [errors])`. Used by `/listings/validate`. |
 | `app/hygiene_check.py` | Done. Returns `AuditResult \| None`. Whitespace-only counts as missing. |
 | `app/recall_check.py` | Done. Loads `data/rapex_blacklist.json` at import into a dict keyed by barcode. Cites the matched alert. |
-| `app/llm_audit.py`, `app/report.py`, `app/dashboard.py` | Stubs |
+| `app/llm_audit.py`, `app/dashboard.py` | Stubs |
+| `app/report.py` | `build_rejection_report` (correction JSON + CSV) and `build_audit_report` (JSON + CSV). |
 | `app/classifier/` | Stubs. Delete. |
-| `frontend/streamlit_app.py` | Working validate page: paste or upload JSON, PASS/FAIL, confirm store. Does not call `/listings/audit` yet. |
+| `frontend/streamlit_app.py` | The audit page: drag-and-drop or browse a `.json` of listings, Start audit (batches of 100 to `POST /listings/audit`), results and blocked tabs, downloads for the audit report and the fail (correction) report. |
+| `frontend/audit_client.py` | Non-UI logic of the page (parse upload, batching, index offsets); tested in `tests/test_frontend.py`. |
 | `data/fetch_rapex.py` | Fetches EU Safety Gate weekly XML reports. |
 | `data/build_classifier_dataset.py` | Builds the 500-row evaluation CSV. |
 | `data/rapex_blacklist.json` | 1,551 alerts, weeks 0 to 51, about 1,516 unique barcodes |

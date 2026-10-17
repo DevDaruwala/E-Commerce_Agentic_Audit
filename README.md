@@ -19,7 +19,7 @@ app/
   hygiene_check.py   GPSR compliance-completeness checks
   recall_check.py    Step 0 instant blacklist match (RAPEX-seeded)
   llm_audit.py       Phase 1: fixed 3-step check (becomes an agent in Phase 2)
-  report.py          Turns a verdict into the final report
+  report.py          Builds the audit report and the fail (correction) report
   dashboard.py       Bare Streamlit UI
 data/
   fetch_rapex.py         Pulls real EU Safety Gate alert data
@@ -66,7 +66,7 @@ uvicorn app.main:app --reload
 
 In a second terminal, start the dashboard:
 ```
-streamlit run app/dashboard.py
+streamlit run frontend/streamlit_app.py
 ```
 
 Check the backend is alive: visit `http://localhost:8000/health`
