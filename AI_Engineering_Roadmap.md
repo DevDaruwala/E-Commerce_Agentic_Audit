@@ -1,6 +1,6 @@
 # AI Engineering Roadmap: Project-Heavy, Built With Claude Code
 
-**CURRENT STEP: 0.1**
+**CURRENT STEP: 0.2**
 *(Claude Code updates this line at the end of every step.)*
 Last updated: 2026-10-17
 
@@ -102,7 +102,7 @@ milestone), **You write**, **Proof**.
 Watch/read: your Python coach chat; `CLAUDE_CODE_GUIDE.md` blocks A to C;
 CampusX roadmap Level 0, slices only (modules and packages, debugging).
 
-- [ ] **0.1 Verify and commit the repo**
+- [x] **0.1 Verify and commit the repo**
   - Project: Claude Code runs the resume checklist, commits the
     untracked data files, finishes the leftover cleanup, and proves a
     fresh `git clone` boots the app.

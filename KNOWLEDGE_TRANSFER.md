@@ -442,8 +442,9 @@ from the bottom up and look for your own filenames, ignoring
 
 ## Where we left off
 *(Replace this section at the end of every session.)*
-- **2026-10-14:** the agent plan and Week 1 schedule were agreed. The
-  classifier was removed from the design. A commit for the hygiene
-  whitespace fix and recall citation was being approved. Items 3 and 4
-  of the cleanup list were not confirmed. Next: finish cleanup, set up
-  the Gemini key, start `sandbox/01_structured.py`.
+- **2026-10-17:** step 0.1 done. Cleanup committed (`af2cb2d`, `d05ccfd`):
+  `groq` -> `google-genai`, `.env.example` -> `GEMINI_API_KEY`, roadmap
+  and docs added. A fresh `git clone` boots `uvicorn app.main:app` and
+  loads 27 listings. `BUILD_LOG.md` is appended by a post-commit hook,
+  so it shows as modified after every commit. Next: step 0.2, Dev
+  writes `MY_MAP.md` (one line per hop of a request) in his own words.
