@@ -1,52 +1,53 @@
 # E-Commerce Agentic Audit — context for Claude Code
-
-Read `CODING_BUDDY_BRIEFING.md` in this repo first — it has the full
-project context, architecture, dataset strategy, and phase plan.
-Also relevant: `master_plan.md`, `Dataset_Strategy.md`,
+Read AI_Engineering_Roadmap.md The CURRENT STEP line says where we are
+Read `KNOWLEDGE_TRANSFER.md` first: it has the current architecture,
+repo state, decisions and roadmap. If it conflicts with this file,
+this file wins. `CODING_BUDDY_BRIEFING.md` is history only (it still
+describes the removed classifier and Groq). Also useful:
+`master_plan.md`, `Dataset_Strategy.md`, `FIELD_DECISIONS.md`,
 `Git_Github_101.md`.
 
-## Who you're helping
-A beginner in Python, OOP, and FastAPI, explicitly prioritizing real
-understanding over speed. This project exists to build practical
-skill, not just to produce finished code.
 
-## How to work with me
-- Always use Plan Mode — show me your plan before editing files. I
-  want to understand every change, not just accept it.
-- One file/task at a time, matching the Phase 1 build order in
-  `CODING_BUDDY_BRIEFING.md` Section 6 — don't jump ahead in the
-  phase plan without flagging it first.
-- Never invent or guess GPSR compliance field values — follow
-  `Dataset_Strategy.md` exactly (real fields from real sources,
-  synthetic fields clearly treated as synthetic).
+## Who you're helping
+Dev is a beginner in Python and FastAPI, learning AI engineering to
+become job-ready. The goal is understanding and a project he can
+explain and defend in interviews, not just finished code.
+
+## How we code together
+- Always use Plan Mode. Show the plan before editing files.
+- One small task at a time. Flag it before jumping ahead in the
+  roadmap.
+- Spec first: Dev writes a plain-English spec, type hints and 3 example
+  inputs and outputs. You write the code from that spec.
+- For core AI pieces (prompts, schemas, tools, graph, retrieval, evals)
+  Dev also writes the tests. He can say "just write it" for a task.
+- After you write code, ask Dev 2 short questions about it and wait for
+  his answers before moving on.
+- Dev's 15-minute no-AI practice reps are his own. Do not fill them in.
+- You may write directly: data scripts, test scaffolding, Docker/CI,
+  docs, Streamlit.
+- Never invent or guess GPSR field values. Follow `Dataset_Strategy.md`
+  and `FIELD_DECISIONS.md`. Never pad data with fabricated listings.
+- Verify claims against the repo before relying on them. Say plainly
+  when something is unfinished or unclear.
 
 ## How to explain code
-- For anything non-trivial or new to me, explain the REASONING before
-  or alongside the code — not just what it does, but why this
-  approach.
-- When code references something defined elsewhere (a field in
-  another class, a function from another file), point out WHERE it's
-  defined — don't assume I'll trace it myself.
-- Comment generated code heavily enough that I could explain it back
-  to someone else afterward.
-- If I ask "why does this work," trace it with a REAL example and
-  real values — not just abstract syntax rules.
-
-## What I build vs. what you build
-Per CODING_BUDDY_BRIEFING.md's ownership split:
-- Stage 1 core files (main.py, schemas.py, validation.py,
-  hygiene_check.py, fixed llm_audit) — I write these myself. Review,
-  suggest fixes, explain bugs — don't write full implementations
-  unless I explicitly ask.
-- Dataset preprocessing scripts — you can write these directly.
-- Stage 2 (LangGraph, RAG, MCP, agents) — I write these myself.
-- Stage 3 (Docker, CI/CD, Azure, Streamlit polish, pytest scaffolding)
-  — you can write these directly; I'll review and ask questions.
+- For anything non-trivial or new, explain the REASONING before or
+  alongside the code: what it does and why this approach.
+- When code uses something defined elsewhere (a field, a function from
+  another file), point out WHERE it's defined.
+- Comment generated code enough that Dev could explain it back to
+  someone else.
+- If he asks "why does this work", trace it with a REAL example and
+  real values, not abstract syntax rules.
 
 ## Git
-Show me the diff and a proposed commit message, but let me approve
-before you commit or push — don't do it silently.
+Show the diff and a proposed commit message. Wait for approval before
+committing or pushing. End each session on something committed, and
+offer to update "Where we left off" in `KNOWLEDGE_TRANSFER.md` and
+`LEARNING_LOG.md`.
 
 ## Do not
-- Add a frontend framework (React, Vue, etc.) — Streamlit only.
-- Turn on auto-accept edits mode for this project.
+- Add a frontend framework (React, Vue, etc.). Streamlit only.
+- Turn on auto-accept edits for this project.
+- Put secrets in tracked files. API keys go in `.env`.

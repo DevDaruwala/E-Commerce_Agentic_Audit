@@ -114,3 +114,16 @@ Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
 
 ---
 
+## 2026-10-17 19:40:09
+
+**Commit:** Switch dependency and env template from Groq to Gemini
+
+requirements.txt: groq -> google-genai.
+.env.example: GROQ_API_KEY -> GEMINI_API_KEY.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+
+**Files changed:** 4 files changed, 129 insertions(+), 7 deletions(-)
+
+---
+
