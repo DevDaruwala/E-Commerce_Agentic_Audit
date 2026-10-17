@@ -4,7 +4,7 @@ schemas.py — the data shapes for this project.
 
 import uuid
 from datetime import datetime
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 from pydantic import BaseModel, Field, model_validator
 
 
@@ -97,3 +97,27 @@ class AuditResult(BaseModel):
                 f'"{self.verdict}"'
             )
         return self
+
+
+class RejectedListing(BaseModel):
+    """One listing the bouncer turned away, and why.
+
+    Built in main.py (audit_batch) when validate_listing() fails. The
+    identifying fields are Optional because a rejected listing may be
+    missing exactly the field we would use to name it (e.g. no title).
+    """
+    index: int  # position in the uploaded list (0-based) — always known
+    title: Optional[str] = None
+    gtin: Optional[str] = None
+    distributor_id: Optional[str] = None
+    errors: list[str]  # messages from validate_listing(), e.g. "gtin: String should match..."
+    original: Any  # the raw item exactly as uploaded, so it can be fixed and re-sent
+
+
+class BatchAuditResponse(BaseModel):
+    """What POST /listings/audit returns for one uploaded list."""
+    total: int            # how many items were uploaded
+    rejected_count: int   # turned away by the bouncer (bad shape)
+    audited_count: int    # let in and audited
+    rejected: list[RejectedListing]
+    results: list[AuditResult]
