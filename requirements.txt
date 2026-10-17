@@ -6,7 +6,7 @@ uvicorn[standard]
 pydantic
 pandas
 pyarrow
-groq
+google-genai
 streamlit
 requests
 python-dotenv
