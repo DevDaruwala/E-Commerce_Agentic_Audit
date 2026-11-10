@@ -8,6 +8,17 @@ auditor/
 # Environment variables — never commit real API keys
 .env
 
+# Raw Safety Gate XML downloads (large, can be re-downloaded)
+notes/raw/
+
+# Built from notes/raw/ by data/fetch_rapex.py (re-creatable in seconds)
+data/alerts.jsonl
+data/alerts_grouped.jsonl
+data/knowledge.jsonl
+data/dev.jsonl
+data/test.jsonl
+data/test_near_twins.txt
+
 # Trained models (these are generated, not source code)
 *.pkl
 
@@ -17,3 +28,11 @@ auditor/
 # IDE
 .vscode/
 .idea/
+
+# Rebuilt by python -m boxes.preprocessing and python -m boxes.build_embeddings
+data/splits/
+data/embeddings/
+
+# Quarto output (rebuilt by quarto render)
+data_report.html
+data_report_files/
