@@ -1,0 +1,19 @@
+risk_type,n,chance_exact,chance_sampled,low,high,small_sample
+ALL,1658,0.3008,0.2969,0.2901,0.3102,False
+Asphyxiation,8,0.0931,0.1,0.004,0.2207,True
+Burns,38,0.1598,0.1579,0.1231,0.2004,False
+Chemical,794,0.5156,0.5121,0.5141,0.5173,False
+Choking,211,0.1703,0.1706,0.1457,0.1965,False
+Cuts,16,0.0768,0.0625,0.0436,0.1099,True
+Damage to hearing,14,0.1663,0.1286,0.1059,0.2183,True
+Damage to sight,13,0.1403,0.1077,0.0646,0.2237,True
+Drowning,9,0.0069,0.0,0.006,0.0079,True
+Electric shock,166,0.0899,0.0843,0.0863,0.0939,False
+Entrapment,14,0.0867,0.1,0.046,0.125,True
+Environment,114,0.1735,0.1456,0.1391,0.2079,False
+Fire,148,0.0938,0.0973,0.0852,0.1039,False
+Health risk / other,11,0.0732,0.0545,0.0106,0.1659,True
+Injuries,237,0.1966,0.1949,0.1892,0.2062,False
+Microbiological,12,0.0077,0.0,0.0077,0.0077,True
+Strangulation,33,0.1057,0.0909,0.0704,0.1511,False
+Suffocation,22,0.0682,0.0909,0.0322,0.1082,True

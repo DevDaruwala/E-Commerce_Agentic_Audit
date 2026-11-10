@@ -1,0 +1,7 @@
+collection_id,query_type,status,precision_at_5,low,high,n
+1,not applicable,not applicable,,,,1658
+2,valid: no risk text in the question,ok,0.7271,0.709,0.7434,1658
+2,"LEAK, NOT A VALID SCORE: risk text in the question",ok,0.9125,0.9018,0.923,1658
+3,not applicable,not applicable,,,,1658
+4,valid: no risk text in the question,ok,0.761,0.7433,0.7762,1658
+4,"LEAK, NOT A VALID SCORE: risk text in the question",ok,0.9317,0.9217,0.9415,1658

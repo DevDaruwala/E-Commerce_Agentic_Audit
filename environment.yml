@@ -1,0 +1,36 @@
+name: AI
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  # Data handling and evaluation (project_plan.md sections 9 and 11)
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - lxml            # parse the Safety Gate XML export
+  - ipykernel       # lets VS Code / Jupyter use this env
+  - pytest
+  - pip:
+      # Phase 1: embeddings (all-mpnet-base-v2, BAAI/bge-base-en-v1.5)
+      - sentence-transformers
+      # Vector database, only after the plain NumPy version works
+      - chromadb
+      # Phase 2: Gemini analyst, schemas, config
+      - google-genai
+      - pydantic
+      - python-dotenv
+      - requests
+      - httpx
+      # Round 4: API and web page
+      - fastapi
+      - uvicorn[standard]
+      - streamlit
+      # Extras: Gemini retry/backoff, progress bars, parquet, stats, lint, async tests
+      - tenacity
+      - tqdm
+      - pyarrow
+      - scipy
+      - ruff
+      - pytest-asyncio

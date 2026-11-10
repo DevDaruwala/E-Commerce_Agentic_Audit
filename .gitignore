@@ -36,3 +36,14 @@ data/embeddings/
 # Quarto output (rebuilt by quarto render)
 data_report.html
 data_report_files/
+
+# ChromaDB database (rebuilt by python -m boxes.build_chroma)
+data/chroma/
+
+# Probe cache (rebuilt when a probe runs)
+reports/probe_results/cache/
+
+# Rendered probe report (rebuilt by quarto render reports/probe.qmd)
+reports/probe.html
+reports/probe.pdf
+reports/probe_files/

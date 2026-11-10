@@ -1,0 +1,45 @@
+collection_id,category,n,precision_at_5,low,high,chance,small_sample
+1,Cosmetics,495,0.9608,0.9438,0.9737,0.4962,False
+1,Toys,331,0.6846,0.6465,0.7196,0.2432,False
+1,Motor vehicles,173,0.5919,0.5399,0.6451,0.1631,False
+1,Electrical appliances and equipment,165,0.6655,0.6133,0.7188,0.1309,False
+1,Chemical products,81,0.9383,0.8914,0.9827,0.4867,False
+1,Lighting chains,64,0.9531,0.9219,0.9781,0.0907,False
+1,Machinery,59,0.5153,0.4305,0.6068,0.1165,False
+1,"Clothing, textiles and fashion items",49,0.6531,0.551,0.7593,0.2557,False
+1,Hobby/sports equipment,39,0.7077,0.5999,0.8205,0.2991,False
+1,Jewellery,38,1.0,1.0,1.0,0.5116,False
+1,other,164,0.7232,0.672,0.7768,0.1645,False
+2,Cosmetics,495,0.8812,0.8638,0.8966,0.4962,False
+2,Toys,331,0.6266,0.5837,0.6707,0.2432,False
+2,Motor vehicles,173,0.6231,0.5549,0.6821,0.1631,False
+2,Electrical appliances and equipment,165,0.5709,0.5163,0.6267,0.1309,False
+2,Chemical products,81,0.9432,0.8963,0.9852,0.4867,False
+2,Lighting chains,64,0.9563,0.9155,0.9906,0.0907,False
+2,Machinery,59,0.5695,0.4847,0.6542,0.1165,False
+2,"Clothing, textiles and fashion items",49,0.3673,0.2571,0.4776,0.2557,False
+2,Hobby/sports equipment,39,0.5282,0.4103,0.641,0.2991,False
+2,Jewellery,38,0.9421,0.9,0.9789,0.5116,False
+2,other,164,0.6976,0.6451,0.75,0.1645,False
+3,Cosmetics,495,0.9721,0.9576,0.983,0.4962,False
+3,Toys,331,0.6918,0.6532,0.7275,0.2432,False
+3,Motor vehicles,173,0.5954,0.541,0.6451,0.1631,False
+3,Electrical appliances and equipment,165,0.6521,0.6024,0.7018,0.1309,False
+3,Chemical products,81,0.9383,0.8914,0.9827,0.4867,False
+3,Lighting chains,64,0.9625,0.9406,0.9844,0.0907,False
+3,Machinery,59,0.5458,0.4542,0.6373,0.1165,False
+3,"Clothing, textiles and fashion items",49,0.6449,0.5388,0.751,0.2557,False
+3,Hobby/sports equipment,39,0.8103,0.7179,0.8923,0.2991,False
+3,Jewellery,38,1.0,1.0,1.0,0.5116,False
+3,other,164,0.7305,0.6756,0.7878,0.1645,False
+4,Cosmetics,495,0.939,0.9232,0.9535,0.4962,False
+4,Toys,331,0.6761,0.635,0.7148,0.2432,False
+4,Motor vehicles,173,0.5514,0.5029,0.5989,0.1631,False
+4,Electrical appliances and equipment,165,0.6158,0.5588,0.6728,0.1309,False
+4,Chemical products,81,0.921,0.8741,0.963,0.4867,False
+4,Lighting chains,64,0.9437,0.9062,0.9781,0.0907,False
+4,Machinery,59,0.5186,0.4237,0.6169,0.1165,False
+4,"Clothing, textiles and fashion items",49,0.5388,0.4286,0.6532,0.2557,False
+4,Hobby/sports equipment,39,0.6564,0.5383,0.7795,0.2991,False
+4,Jewellery,38,0.9737,0.9368,1.0,0.5116,False
+4,other,164,0.7415,0.689,0.7939,0.1645,False

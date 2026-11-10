@@ -1,0 +1,9 @@
+collection_id,metric,value
+1,ids_equal_card_list,1.0
+2,ids_equal_card_list,1.0
+3,ids_equal_card_list,1.0
+4,ids_equal_card_list,1.0
+1,precision_at_5_numpy,0.758
+1,precision_at_5_chroma,0.754
+1,same_neighbour_sets_share,0.68
+1,alerts_checked,100.0

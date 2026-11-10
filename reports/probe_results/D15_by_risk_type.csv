@@ -1,0 +1,69 @@
+collection_id,risk_type,n,precision_at_5,low,high,chance,small_sample
+1,Asphyxiation,8,0.3,0.05,0.6,0.0931,True
+1,Burns,38,0.6684,0.5421,0.7947,0.1598,False
+1,Chemical,794,0.9249,0.9096,0.9393,0.5156,False
+1,Choking,211,0.7043,0.6606,0.7488,0.1703,False
+1,Cuts,16,0.1875,0.025,0.3503,0.0768,True
+1,Damage to hearing,14,0.7857,0.5854,0.9429,0.1663,True
+1,Damage to sight,13,0.7538,0.5688,0.9385,0.1403,True
+1,Drowning,9,0.8,0.6444,0.9333,0.0069,True
+1,Electric shock,166,0.8386,0.8024,0.8735,0.0899,False
+1,Entrapment,14,0.5714,0.4286,0.7143,0.0867,True
+1,Environment,114,0.5772,0.507,0.6509,0.1735,False
+1,Fire,148,0.4405,0.3851,0.5,0.0938,False
+1,Health risk / other,11,0.3455,0.0909,0.6182,0.0732,True
+1,Injuries,237,0.8076,0.7713,0.8388,0.1966,False
+1,Microbiological,12,0.2,0.0667,0.3667,0.0077,True
+1,Strangulation,33,0.6788,0.5333,0.8002,0.1057,False
+1,Suffocation,22,0.6091,0.4545,0.7455,0.0682,True
+2,Asphyxiation,8,0.275,0.025,0.55,0.0931,True
+2,Burns,38,0.7158,0.5947,0.8316,0.1598,False
+2,Chemical,794,0.7897,0.7695,0.8106,0.5156,False
+2,Choking,211,0.8218,0.7839,0.8597,0.1703,False
+2,Cuts,16,0.1875,0.0125,0.3625,0.0768,True
+2,Damage to hearing,14,0.7429,0.5,0.9286,0.1663,True
+2,Damage to sight,13,0.8615,0.7231,0.9846,0.1403,True
+2,Drowning,9,0.8667,0.7111,0.9778,0.0069,True
+2,Electric shock,166,0.8723,0.8386,0.9024,0.0899,False
+2,Entrapment,14,0.5571,0.3857,0.7286,0.0867,True
+2,Environment,114,0.2368,0.1825,0.2947,0.1735,False
+2,Fire,148,0.4311,0.3743,0.4973,0.0938,False
+2,Health risk / other,11,0.3636,0.1091,0.6,0.0732,True
+2,Injuries,237,0.8861,0.8532,0.9156,0.1966,False
+2,Microbiological,12,0.2667,0.1,0.4504,0.0077,True
+2,Strangulation,33,0.6606,0.5212,0.7818,0.1057,False
+2,Suffocation,22,0.6091,0.4455,0.7636,0.0682,True
+3,Asphyxiation,8,0.3,0.05,0.6,0.0931,True
+3,Burns,38,0.6632,0.5368,0.7842,0.1598,False
+3,Chemical,794,0.932,0.9166,0.9464,0.5156,False
+3,Choking,211,0.6882,0.6455,0.7327,0.1703,False
+3,Cuts,16,0.175,0.0,0.35,0.0768,True
+3,Damage to hearing,14,0.7571,0.5143,0.9429,0.1663,True
+3,Damage to sight,13,0.8308,0.6615,0.9692,0.1403,True
+3,Drowning,9,0.6889,0.4667,0.8667,0.0069,True
+3,Electric shock,166,0.8108,0.7687,0.8482,0.0899,False
+3,Entrapment,14,0.5714,0.3857,0.7429,0.0867,True
+3,Environment,114,0.6649,0.6,0.7281,0.1735,False
+3,Fire,148,0.4365,0.3851,0.4933,0.0938,False
+3,Health risk / other,11,0.4364,0.1636,0.7091,0.0732,True
+3,Injuries,237,0.827,0.7941,0.8557,0.1966,False
+3,Microbiological,12,0.1667,0.05,0.3,0.0077,True
+3,Strangulation,33,0.7152,0.5998,0.8121,0.1057,False
+3,Suffocation,22,0.6636,0.5,0.8182,0.0682,True
+4,Asphyxiation,8,0.325,0.075,0.625,0.0931,True
+4,Burns,38,0.7053,0.5789,0.8211,0.1598,False
+4,Chemical,794,0.8506,0.8295,0.8713,0.5156,False
+4,Choking,211,0.8057,0.7668,0.8436,0.1703,False
+4,Cuts,16,0.275,0.1,0.45,0.0768,True
+4,Damage to hearing,14,0.7571,0.5286,0.9429,0.1663,True
+4,Damage to sight,13,0.8615,0.7077,1.0,0.1403,True
+4,Drowning,9,0.7778,0.5333,0.9778,0.0069,True
+4,Electric shock,166,0.8855,0.853,0.9145,0.0899,False
+4,Entrapment,14,0.5143,0.3282,0.7143,0.0867,True
+4,Environment,114,0.4421,0.3771,0.5071,0.1735,False
+4,Fire,148,0.4581,0.4014,0.5162,0.0938,False
+4,Health risk / other,11,0.3818,0.1091,0.6364,0.0732,True
+4,Injuries,237,0.7873,0.7536,0.8186,0.1966,False
+4,Microbiological,12,0.3333,0.1667,0.5167,0.0077,True
+4,Strangulation,33,0.7333,0.6,0.8424,0.1057,False
+4,Suffocation,22,0.6909,0.527,0.8455,0.0682,True

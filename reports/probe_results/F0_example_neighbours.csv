@@ -1,0 +1,41 @@
+collection_id,dev_index,dev_product,dev_risks,rank,neighbour_index,neighbour_product,neighbour_risks,score
+1,12094,Soft toy,Choking,1,2728,Plastic toy,Cuts,0.8558
+1,12094,Soft toy,Choking,2,1838,Plastic toy,Choking,0.7753
+1,12094,Soft toy,Choking,3,2820,Soft toy,Choking,0.7706
+1,12094,Soft toy,Choking,4,11380,Soft toy,Choking,0.7596
+1,12094,Soft toy,Choking,5,5421,Soft toy,Choking,0.7584
+1,12095,Necklace set,Chemical,1,2761,Jewellery set,Chemical,0.8808
+1,12095,Necklace set,Chemical,2,8792,Jewellery set,Chemical,0.8588
+1,12095,Necklace set,Chemical,3,1311,Necklace and earrings set,Chemical,0.8573
+1,12095,Necklace set,Chemical,4,1433,Necklace and earrings set,Chemical,0.848
+1,12095,Necklace set,Chemical,5,5423,Necklace,Chemical,0.843
+2,12094,Soft toy,Choking,1,2728,Plastic toy,Cuts,0.7999
+2,12094,Soft toy,Choking,2,1838,Plastic toy,Choking,0.7329
+2,12094,Soft toy,Choking,3,9492,Plastic toy set,Choking,0.7245
+2,12094,Soft toy,Choking,4,11380,Soft toy,Choking,0.7018
+2,12094,Soft toy,Choking,5,4102,Soft toy,Choking,0.6923
+2,12095,Necklace set,Chemical,1,8905,Jewellery set,Chemical,0.6999
+2,12095,Necklace set,Chemical,2,2761,Jewellery set,Chemical,0.6821
+2,12095,Necklace set,Chemical,3,566,Jewellery set,Chemical,0.6711
+2,12095,Necklace set,Chemical,4,546,Jewellery set,Chemical,0.6674
+2,12095,Necklace set,Chemical,5,8893,Jewellery set,Chemical,0.6656
+3,12094,Soft toy,Choking,1,2728,Plastic toy,Cuts,0.8128
+3,12094,Soft toy,Choking,2,6435,Soft toy,Choking,0.8121
+3,12094,Soft toy,Choking,3,11380,Soft toy,Choking,0.812
+3,12094,Soft toy,Choking,4,1665,Soft toy,Choking,0.8053
+3,12094,Soft toy,Choking,5,123,Soft toy,Choking,0.8037
+3,12095,Necklace set,Chemical,1,2761,Jewellery set,Chemical,0.8783
+3,12095,Necklace set,Chemical,2,8905,Jewellery set,Chemical,0.8606
+3,12095,Necklace set,Chemical,3,7123,Necklace,Chemical,0.8494
+3,12095,Necklace set,Chemical,4,5423,Necklace,Chemical,0.8491
+3,12095,Necklace set,Chemical,5,561,Necklace,Chemical,0.8381
+4,12094,Soft toy,Choking,1,2728,Plastic toy,Cuts,0.8065
+4,12094,Soft toy,Choking,2,11380,Soft toy,Choking,0.7902
+4,12094,Soft toy,Choking,3,6435,Soft toy,Choking,0.7813
+4,12094,Soft toy,Choking,4,11863,Soft toy,Choking,0.7803
+4,12094,Soft toy,Choking,5,10178,Soft toy,Choking,0.7794
+4,12095,Necklace set,Chemical,1,2761,Jewellery set,Chemical,0.8097
+4,12095,Necklace set,Chemical,2,8905,Jewellery set,Chemical,0.7846
+4,12095,Necklace set,Chemical,3,642,Necklace and earrings set,Chemical,0.7594
+4,12095,Necklace set,Chemical,4,546,Jewellery set,Chemical,0.7514
+4,12095,Necklace set,Chemical,5,5423,Necklace,Chemical,0.7489

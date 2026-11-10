@@ -183,6 +183,107 @@ def save_embeddings(table: np.ndarray, card_numbers: list[int], text_version: st
     return table_path, cards_path
 
 
+# The folder where the ChromaDB database lives (rebuilt by boxes/build_chroma.py).
+CHROMA_DIR = DATA_DIR / "chroma"
+
+
+def load_embeddings(text_version: str, model_name: str,
+                    folder: Path = EMBEDDINGS_DIR) -> tuple[np.ndarray, list[int]]:
+    """Read back the two files that save_embeddings wrote: (table, card_numbers)."""
+    # Step 1: build the same file names that save_embeddings used.
+    short_model = model_name.split("/")[-1]
+    table_path = folder / f"{text_version}__{short_model}.npy"
+    cards_path = folder / f"{text_version}__{short_model}_cards.json"
+
+    # Step 2: read the table of numbers, and the card list.
+    table = np.load(table_path)
+    with open(cards_path, encoding="utf-8") as f:
+        card_numbers = json.load(f)
+
+    # Step 3: hand them back.
+    return table, card_numbers
+
+
+def _as_text(items) -> str:
+    """A list of labels as one text, for example ["Fire", "Injuries"] -> "Fire | Injuries".
+
+    ChromaDB labels cannot be None, so a missing or empty list becomes "".
+    """
+    return " | ".join(items or [])
+
+
+def load_into_chroma(table: np.ndarray, card_numbers: list[int], cards: list[dict],
+                     text_version: str, model_name: str, chroma_dir: Path = CHROMA_DIR,
+                     batch_size: int | None = None) -> int:
+    """Store one embedding in its own ChromaDB collection. Returns how many items it holds.
+
+    The collection is named "<text_version>__<model>", the same as the saved files.
+    Every item has:
+      id        = the card number as text (the same id in every collection)
+      numbers   = one row of the table
+      document  = the exact sentence that was embedded
+      labels    = index, row, category, product, risk_types, law_names, is_thin,
+                  twin_group, report_date
+    If the collection already exists it is deleted and made again, so a second run
+    never leaves duplicates.
+    """
+    # The ChromaDB tool is imported here, so the text functions above stay fast to import.
+    import chromadb
+
+    # Step 1: stop if the inputs do not fit together.
+    if text_version not in TEXT_VERSIONS:
+        raise ValueError(f"unknown text version '{text_version}'. Allowed: {', '.join(TEXT_VERSIONS)}")
+    if len(table) != len(card_numbers):
+        raise ValueError(f"the table has {len(table)} rows but the card list has {len(card_numbers)} numbers")
+    cards_by_number = {card["index"]: card for card in cards}
+    for number in card_numbers:
+        if number not in cards_by_number:
+            raise ValueError(f"card {number} is in the card list but not in the library cards")
+
+    # Step 2: open the database folder (it is created if it is not there yet).
+    client = chromadb.PersistentClient(path=str(chroma_dir))
+
+    # Step 3: name the collection like the saved files, and delete an old one with that name.
+    name = f"{text_version}__{model_name.split('/')[-1]}"
+    if name in {getattr(old, "name", old) for old in client.list_collections()}:
+        client.delete_collection(name)
+
+    # Step 4: make the collection. "cosine" is the distance that fits our numbers.
+    # embedding_function=None: we bring our own numbers, so ChromaDB must not load a model.
+    collection = client.create_collection(
+        name=name, configuration={"hnsw": {"space": "cosine"}}, embedding_function=None
+    )
+
+    # Step 5: build the ids, sentences and labels, in the same order as the table rows.
+    build_sentence = TEXT_VERSIONS[text_version]
+    ids, documents, labels = [], [], []
+    for row, number in enumerate(card_numbers):
+        card = cards_by_number[number]
+        ids.append(str(number))
+        documents.append(build_sentence(card))
+        labels.append({
+            "index": card["index"],            # the card number: the key that links every place
+            "row": row,                        # the position in the saved .npy file
+            "category": card["category"],
+            "product": card["product"],
+            "risk_types": _as_text(card["risk_types"]),
+            "law_names": _as_text(card.get("law_names")),
+            "is_thin": bool(card["is_thin"]),
+            "twin_group": int(card["twin_group"]),
+            "report_date": card["report_date"],
+        })
+
+    # Step 6: add everything in batches, because ChromaDB takes only a limited number at once.
+    batch_size = batch_size or client.get_max_batch_size()
+    for start in range(0, len(ids), batch_size):
+        end = start + batch_size
+        collection.add(ids=ids[start:end], embeddings=table[start:end],
+                       documents=documents[start:end], metadatas=labels[start:end])
+
+    # Step 7: hand back the number of items stored.
+    return collection.count()
+
+
 if __name__ == "__main__":
     # Quick check on the duck row (index 2767) and on row 1 (the scooter).
     print(product_and_description("Plastic duck", "Yellow plastic duck."))

@@ -7,8 +7,10 @@ It only calls the functions we already built, in the right order:
     (read cards)     (make numbers)     (write files)
 
 Run it from the project folder with:  python -m boxes.build_embeddings
+For the second model:                 python -m boxes.build_embeddings BAAI/bge-base-en-v1.5
 """
-# time is only used to measure how long each text version takes.
+# sys is used to read the model name typed after the command; time measures each round.
+import sys
 import time
 
 # SPLITS_DIR = the folder data/splits, where the clean library file lives.
@@ -23,10 +25,10 @@ from boxes.similar_alerts import TEXT_VERSIONS, embed_library, save_embeddings
 # The model that turns the sentences into numbers. It must be one of the allowed
 # names in ALLOWED_MODELS (similar_alerts.py). To try the other model later,
 # change only this line.
-MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
+DEFAULT_MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
 
 
-def main() -> None:
+def main(model_name: str = DEFAULT_MODEL_NAME) -> None:
     # ------------------------------------------------------------------
     # Step 1: read the library file.
     # In : the path data/splits/library.jsonl
@@ -63,7 +65,7 @@ def main() -> None:
         #     (loaded by load_model) for 768 numbers per sentence
         #   - collect the card numbers in the same order
         # --------------------------------------------------------------
-        table, card_numbers = embed_library(cards, text_version, MODEL_NAME)
+        table, card_numbers = embed_library(cards, text_version, model_name)
 
         # --------------------------------------------------------------
         # Step 2b: save the table and the card list, so we never have to redo this.
@@ -74,7 +76,7 @@ def main() -> None:
         # The text version and the model are in the file name, so the two embeddings
         # never overwrite each other.
         # --------------------------------------------------------------
-        table_path, cards_path = save_embeddings(table, card_numbers, text_version, MODEL_NAME)
+        table_path, cards_path = save_embeddings(table, card_numbers, text_version, model_name)
 
         # --------------------------------------------------------------
         # Step 2c: say what happened, so you can check it by eye.
@@ -86,5 +88,6 @@ def main() -> None:
 
 # This block runs only when you start the file directly with
 # "python -m boxes.build_embeddings". It does not run when another file imports this one.
+# If a model name was typed after the command, use it. Otherwise use the default.
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1] if len(sys.argv) > 1 else DEFAULT_MODEL_NAME)

@@ -1,0 +1,217 @@
+---
+title: "Embedding probes: what do the numbers say?"
+subtitle: "Written for reading, not for editing. It only shows saved results."
+format:
+  html:
+    toc: true
+    embed-resources: true
+    code-tools: true
+    fig-width: 8
+    fig-height: 4
+  typst:
+    papersize: a4
+    margin:
+      x: 1.8cm
+      y: 2cm
+    fontsize: 12pt
+    toc: false
+    fig-width: 8
+    fig-height: 4
+execute:
+  echo: false
+  warning: false
+jupyter: python3
+---
+
+```{python}
+# Setup: find the project folder (this file lives in reports/), then load the report helpers.
+# The helpers only READ saved CSV files. Nothing is recomputed here.
+import pathlib, sys
+root = pathlib.Path.cwd()
+if root.name == "reports":
+    root = root.parent
+sys.path.insert(0, str(root))
+from boxes.probe_report import show, render_read_first, md_table
+```
+
+# Read this first
+
+```{python}
+render_read_first()
+```
+
+# 1 Foundation check
+
+```{python}
+show("F0")
+```
+
+# 2 Group C: leaks and fairness
+
+These probes come first because they decide whether any score in this report can be trusted.
+
+## C10 The chance level
+
+```{python}
+show("C10")
+```
+
+## C11 Near-copies
+
+```{python}
+show("C11")
+```
+
+## C12 Risk text in the question (a leak demo)
+
+```{python}
+show("C12")
+```
+
+## C13 Self-match and the database check
+
+```{python}
+show("C13")
+```
+
+# 3 Group A: the shape of the space
+
+## A1 Random pairs
+
+```{python}
+show("A1")
+```
+
+## A2 Do all fingerprints lean one way?
+
+```{python}
+show("A2")
+```
+
+## A3 The main directions
+
+```{python}
+show("A3")
+```
+
+# 4 Group D: does "similar" mean "same danger"?
+
+## D14 Same product, different danger
+
+```{python}
+show("D14")
+```
+
+## D15 Score per danger type
+
+```{python}
+show("D15")
+```
+
+## D16 Score per category
+
+```{python}
+show("D16")
+```
+
+## D17 Alerts with several dangers
+
+```{python}
+show("D17")
+```
+
+# 5 Group B: what drives the matches
+
+## B4 Short or long text
+
+```{python}
+show("B4")
+```
+
+## B5 The category
+
+```{python}
+show("B5")
+```
+
+## B6 Generic words
+
+```{python}
+show("B6")
+```
+
+## B7 Product names
+
+```{python}
+show("B7")
+```
+
+## B8 Hint words
+
+```{python}
+show("B8")
+```
+
+## B9 Chemical names
+
+```{python}
+show("B9")
+```
+
+# 6 Group E: time and style
+
+## E18 Month and year
+
+```{python}
+show("E18")
+```
+
+## E19 Country
+
+```{python}
+show("E19")
+```
+
+## E20 Alert type
+
+```{python}
+show("E20")
+```
+
+# 7 Groups F and G: comparison and calibration
+
+## F21 The four collections side by side (five neighbours)
+
+```{python}
+show("F21")
+```
+
+## F22 Five neighbours or ten
+
+```{python}
+show("F22")
+```
+
+## F23 A picture of the space
+
+```{python}
+show("F23")
+```
+
+## F24 Look at real examples yourself
+
+```{python}
+show("F24")
+```
+
+## G25 How sure should we be? (calibration)
+
+```{python}
+show("G25")
+```
+
+# 8 Ranking and decisions
+
+```{python}
+show("RANK")
+```

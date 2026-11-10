@@ -1,0 +1,26 @@
+word_pattern,risk_type,n_queries_changed
+\btoxic\w*,Chemical,0
+\bcadmium\w*,Chemical,0
+\bmercury\w*,Chemical,0
+\bformaldehyde\w*,Chemical,0
+\bphthalate\w*,Chemical,0
+\bchemical\w*,Chemical,83
+\binjur\w*,Injuries,0
+\bchok\w*,Choking,0
+\bsmall part\w*,Choking,1
+\bshock\w*,Electric shock,0
+\blive part\w*,Electric shock,0
+\bfire\b,Fire,2
+\bflammab\w*,Fire,0
+\bignit\w*,Fire,0
+\boverheat\w*,Fire,0
+\bburn\w*,Burns,1
+\bscald\w*,Burns,0
+\bstrangul\w*,Strangulation,0
+\bdrawstring\w*,Strangulation,8
+\bsuffocat\w*,Suffocation,0
+\bdrown\w*,Drowning,0
+\bdetach\w*,plan example,9
+\bsharp\w*,plan example,0
+\bsmall parts?\w*,plan example,1
+\bbattery\w*,plan example,60

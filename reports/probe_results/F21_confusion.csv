@@ -1,0 +1,409 @@
+collection_id,true_risk,voted_risk,share_of_true
+1,Asphyxiation,Injuries,0.25
+1,Asphyxiation,Chemical,0.625
+1,Asphyxiation,Choking,0.125
+1,Burns,Environment,0.1316
+1,Burns,Electric shock,0.1316
+1,Burns,Fire,0.0526
+1,Burns,Chemical,0.0526
+1,Burns,Injuries,0.3684
+1,Burns,Damage to sight,0.0263
+1,Burns,Choking,0.0526
+1,Burns,Burns,0.1842
+1,Chemical,Chemical,0.9131
+1,Chemical,Burns,0.0038
+1,Chemical,Injuries,0.0139
+1,Chemical,Environment,0.0264
+1,Chemical,Electric shock,0.0025
+1,Chemical,Choking,0.0315
+1,Chemical,Strangulation,0.0013
+1,Chemical,Damage to sight,0.0013
+1,Chemical,Microbiological,0.005
+1,Chemical,Fire,0.0013
+1,Choking,Choking,0.6919
+1,Choking,Injuries,0.0569
+1,Choking,Chemical,0.1469
+1,Choking,Environment,0.0521
+1,Choking,Strangulation,0.0142
+1,Choking,Burns,0.0095
+1,Choking,Cuts,0.0047
+1,Choking,Suffocation,0.0047
+1,Choking,Damage to hearing,0.0047
+1,Choking,Drowning,0.0047
+1,Choking,Microbiological,0.0095
+1,Cuts,Environment,0.1875
+1,Cuts,Electric shock,0.125
+1,Cuts,Injuries,0.5625
+1,Cuts,Cuts,0.0625
+1,Cuts,Strangulation,0.0625
+1,Damage to hearing,Choking,0.1429
+1,Damage to hearing,Environment,0.0714
+1,Damage to hearing,Damage to hearing,0.1429
+1,Damage to hearing,Injuries,0.5714
+1,Damage to hearing,Burns,0.0714
+1,Damage to sight,Damage to sight,0.4615
+1,Damage to sight,Choking,0.0769
+1,Damage to sight,Environment,0.2308
+1,Damage to sight,Burns,0.1538
+1,Damage to sight,Strangulation,0.0769
+1,Drowning,Injuries,0.1111
+1,Drowning,Drowning,0.8889
+1,Electric shock,Electric shock,0.8494
+1,Electric shock,Environment,0.0542
+1,Electric shock,Fire,0.0241
+1,Electric shock,Injuries,0.0361
+1,Electric shock,Cuts,0.0181
+1,Electric shock,Other,0.006
+1,Electric shock,Burns,0.012
+1,Entrapment,Choking,0.1429
+1,Entrapment,Injuries,0.5
+1,Entrapment,Strangulation,0.2143
+1,Entrapment,Drowning,0.1429
+1,Environment,Environment,0.4912
+1,Environment,Chemical,0.2018
+1,Environment,Electric shock,0.0965
+1,Environment,Burns,0.0175
+1,Environment,Injuries,0.114
+1,Environment,Choking,0.0263
+1,Environment,Microbiological,0.0263
+1,Environment,Drowning,0.0175
+1,Environment,Fire,0.0088
+1,Fire,Injuries,0.4189
+1,Fire,Electric shock,0.3311
+1,Fire,Fire,0.0676
+1,Fire,Chemical,0.0135
+1,Fire,Environment,0.1081
+1,Fire,Burns,0.0541
+1,Fire,Cuts,0.0068
+1,Health risk / other,Health risk / other,0.2727
+1,Health risk / other,Chemical,0.6364
+1,Health risk / other,Choking,0.0909
+1,Injuries,Injuries,0.8101
+1,Injuries,Strangulation,0.0169
+1,Injuries,Drowning,0.0127
+1,Injuries,Chemical,0.0253
+1,Injuries,Environment,0.0211
+1,Injuries,Fire,0.0211
+1,Injuries,Electric shock,0.0042
+1,Injuries,Choking,0.0338
+1,Injuries,Cuts,0.0253
+1,Injuries,Damage to sight,0.0042
+1,Injuries,Burns,0.0253
+1,Microbiological,Chemical,0.9167
+1,Microbiological,Microbiological,0.0833
+1,Strangulation,Injuries,0.2424
+1,Strangulation,Strangulation,0.4242
+1,Strangulation,Choking,0.2727
+1,Strangulation,Drowning,0.0303
+1,Strangulation,Burns,0.0303
+1,Suffocation,Choking,0.2273
+1,Suffocation,Injuries,0.1818
+1,Suffocation,Suffocation,0.3636
+1,Suffocation,Strangulation,0.0455
+1,Suffocation,Chemical,0.1818
+2,Asphyxiation,Injuries,0.25
+2,Asphyxiation,Chemical,0.125
+2,Asphyxiation,Suffocation,0.125
+2,Asphyxiation,Choking,0.375
+2,Asphyxiation,Drowning,0.125
+2,Burns,Choking,0.1053
+2,Burns,Electric shock,0.1579
+2,Burns,Fire,0.0263
+2,Burns,Burns,0.2105
+2,Burns,Chemical,0.0263
+2,Burns,Injuries,0.3684
+2,Burns,Damage to sight,0.0526
+2,Burns,Environment,0.0263
+2,Burns,Strangulation,0.0263
+2,Chemical,Chemical,0.8136
+2,Chemical,Suffocation,0.0038
+2,Chemical,Choking,0.1071
+2,Chemical,Burns,0.0038
+2,Chemical,Fire,0.0025
+2,Chemical,Injuries,0.0264
+2,Chemical,Electric shock,0.0126
+2,Chemical,Environment,0.0076
+2,Chemical,Microbiological,0.0126
+2,Chemical,Strangulation,0.0063
+2,Chemical,Cuts,0.0025
+2,Chemical,Damage to sight,0.0013
+2,Choking,Choking,0.8483
+2,Choking,Strangulation,0.0427
+2,Choking,Injuries,0.0332
+2,Choking,Chemical,0.0521
+2,Choking,Electric shock,0.0047
+2,Choking,Microbiological,0.0047
+2,Choking,Damage to sight,0.0047
+2,Choking,Drowning,0.0095
+2,Cuts,Burns,0.1875
+2,Cuts,Choking,0.0625
+2,Cuts,Injuries,0.375
+2,Cuts,Cuts,0.0625
+2,Cuts,Fire,0.0625
+2,Cuts,Strangulation,0.25
+2,Damage to hearing,Choking,0.3571
+2,Damage to hearing,Injuries,0.5714
+2,Damage to hearing,Burns,0.0714
+2,Damage to sight,Damage to sight,0.5385
+2,Damage to sight,Choking,0.1538
+2,Damage to sight,Chemical,0.0769
+2,Damage to sight,Burns,0.1538
+2,Damage to sight,Strangulation,0.0769
+2,Drowning,Injuries,0.1111
+2,Drowning,Drowning,0.8889
+2,Electric shock,Electric shock,0.8554
+2,Electric shock,Fire,0.0783
+2,Electric shock,Injuries,0.0482
+2,Electric shock,Cuts,0.006
+2,Electric shock,Choking,0.006
+2,Electric shock,Environment,0.006
+2,Entrapment,Choking,0.1429
+2,Entrapment,Injuries,0.5
+2,Entrapment,Strangulation,0.1429
+2,Entrapment,Cuts,0.0714
+2,Entrapment,Drowning,0.1429
+2,Environment,Electric shock,0.3158
+2,Environment,Chemical,0.1053
+2,Environment,Environment,0.2018
+2,Environment,Injuries,0.1579
+2,Environment,Choking,0.114
+2,Environment,Strangulation,0.0263
+2,Environment,Fire,0.0263
+2,Environment,Microbiological,0.0263
+2,Environment,Burns,0.0088
+2,Environment,Drowning,0.0175
+2,Fire,Injuries,0.4797
+2,Fire,Electric shock,0.3108
+2,Fire,Fire,0.1216
+2,Fire,Chemical,0.0135
+2,Fire,Environment,0.0068
+2,Fire,Burns,0.0338
+2,Fire,Cuts,0.0068
+2,Fire,Choking,0.027
+2,Health risk / other,Health risk / other,0.2727
+2,Health risk / other,Microbiological,0.1818
+2,Health risk / other,Chemical,0.4545
+2,Health risk / other,Choking,0.0909
+2,Injuries,Injuries,0.8312
+2,Injuries,Strangulation,0.0169
+2,Injuries,Drowning,0.0127
+2,Injuries,Choking,0.0591
+2,Injuries,Chemical,0.0042
+2,Injuries,Environment,0.0042
+2,Injuries,Electric shock,0.0169
+2,Injuries,Cuts,0.0295
+2,Injuries,Fire,0.0042
+2,Injuries,Damage to sight,0.0042
+2,Injuries,Burns,0.0169
+2,Microbiological,Chemical,0.8333
+2,Microbiological,Microbiological,0.1667
+2,Strangulation,Injuries,0.2727
+2,Strangulation,Strangulation,0.3333
+2,Strangulation,Choking,0.3636
+2,Strangulation,Drowning,0.0303
+2,Suffocation,Choking,0.4091
+2,Suffocation,Injuries,0.2273
+2,Suffocation,Suffocation,0.3636
+3,Asphyxiation,Strangulation,0.125
+3,Asphyxiation,Chemical,0.5
+3,Asphyxiation,Injuries,0.25
+3,Asphyxiation,Drowning,0.125
+3,Burns,Environment,0.0789
+3,Burns,Fire,0.0789
+3,Burns,Electric shock,0.1053
+3,Burns,Chemical,0.0789
+3,Burns,Injuries,0.3947
+3,Burns,Burns,0.1316
+3,Burns,Damage to sight,0.0526
+3,Burns,Choking,0.0526
+3,Burns,Damage to hearing,0.0263
+3,Chemical,Chemical,0.927
+3,Chemical,Burns,0.005
+3,Chemical,Fire,0.0025
+3,Chemical,Environment,0.0189
+3,Chemical,Choking,0.0252
+3,Chemical,Injuries,0.0164
+3,Chemical,Electric shock,0.0025
+3,Chemical,Damage to sight,0.0013
+3,Chemical,Strangulation,0.0013
+3,Choking,Choking,0.6967
+3,Choking,Environment,0.0521
+3,Choking,Injuries,0.0616
+3,Choking,Chemical,0.1517
+3,Choking,Suffocation,0.0047
+3,Choking,Burns,0.0047
+3,Choking,Damage to hearing,0.0047
+3,Choking,Cuts,0.0047
+3,Choking,Damage to sight,0.0047
+3,Choking,Drowning,0.0047
+3,Choking,Microbiological,0.0047
+3,Choking,Strangulation,0.0047
+3,Cuts,Burns,0.1875
+3,Cuts,Environment,0.0625
+3,Cuts,Injuries,0.625
+3,Cuts,Cuts,0.0625
+3,Cuts,Fire,0.0625
+3,Damage to hearing,Choking,0.3571
+3,Damage to hearing,Injuries,0.6429
+3,Damage to sight,Damage to sight,0.5385
+3,Damage to sight,Choking,0.0769
+3,Damage to sight,Chemical,0.0769
+3,Damage to sight,Burns,0.0769
+3,Damage to sight,Damage to hearing,0.0769
+3,Damage to sight,Injuries,0.0769
+3,Damage to sight,Environment,0.0769
+3,Drowning,Injuries,0.1111
+3,Drowning,Drowning,0.6667
+3,Drowning,Chemical,0.2222
+3,Electric shock,Electric shock,0.8193
+3,Electric shock,Fire,0.0361
+3,Electric shock,Environment,0.0663
+3,Electric shock,Burns,0.0241
+3,Electric shock,Injuries,0.0361
+3,Electric shock,Cuts,0.012
+3,Electric shock,Chemical,0.006
+3,Entrapment,Choking,0.1429
+3,Entrapment,Injuries,0.6429
+3,Entrapment,Strangulation,0.0714
+3,Entrapment,Chemical,0.1429
+3,Environment,Environment,0.6053
+3,Environment,Electric shock,0.0702
+3,Environment,Chemical,0.1491
+3,Environment,Injuries,0.1053
+3,Environment,Choking,0.0351
+3,Environment,Fire,0.0088
+3,Environment,Microbiological,0.0263
+3,Fire,Injuries,0.4392
+3,Fire,Electric shock,0.2973
+3,Fire,Fire,0.0878
+3,Fire,Environment,0.1014
+3,Fire,Chemical,0.0338
+3,Fire,Burns,0.0405
+3,Health risk / other,Health risk / other,0.2727
+3,Health risk / other,Chemical,0.6364
+3,Health risk / other,Injuries,0.0909
+3,Injuries,Injuries,0.8523
+3,Injuries,Environment,0.0169
+3,Injuries,Strangulation,0.0084
+3,Injuries,Chemical,0.0338
+3,Injuries,Fire,0.0169
+3,Injuries,Choking,0.0211
+3,Injuries,Damage to sight,0.0042
+3,Injuries,Cuts,0.0127
+3,Injuries,Burns,0.0169
+3,Injuries,Damage to hearing,0.0042
+3,Injuries,Entrapment,0.0084
+3,Injuries,Electric shock,0.0042
+3,Microbiological,Chemical,0.9167
+3,Microbiological,Microbiological,0.0833
+3,Strangulation,Strangulation,0.4242
+3,Strangulation,Injuries,0.303
+3,Strangulation,Choking,0.2727
+3,Suffocation,Choking,0.3182
+3,Suffocation,Strangulation,0.0455
+3,Suffocation,Suffocation,0.3636
+3,Suffocation,Injuries,0.1818
+3,Suffocation,Chemical,0.0909
+4,Asphyxiation,Suffocation,0.125
+4,Asphyxiation,Chemical,0.125
+4,Asphyxiation,Injuries,0.25
+4,Asphyxiation,Choking,0.375
+4,Asphyxiation,Drowning,0.125
+4,Burns,Environment,0.0789
+4,Burns,Electric shock,0.1579
+4,Burns,Chemical,0.0263
+4,Burns,Fire,0.0526
+4,Burns,Injuries,0.3947
+4,Burns,Damage to sight,0.0526
+4,Burns,Choking,0.0526
+4,Burns,Burns,0.1316
+4,Burns,Strangulation,0.0526
+4,Chemical,Chemical,0.8401
+4,Chemical,Choking,0.0819
+4,Chemical,Strangulation,0.0063
+4,Chemical,Burns,0.0038
+4,Chemical,Injuries,0.0189
+4,Chemical,Environment,0.0139
+4,Chemical,Electric shock,0.0088
+4,Chemical,Microbiological,0.0202
+4,Chemical,Fire,0.0013
+4,Chemical,Drowning,0.0013
+4,Chemical,Damage to sight,0.0038
+4,Choking,Choking,0.8294
+4,Choking,Injuries,0.0521
+4,Choking,Environment,0.0142
+4,Choking,Chemical,0.0427
+4,Choking,Damage to sight,0.019
+4,Choking,Electric shock,0.0047
+4,Choking,Suffocation,0.0047
+4,Choking,Strangulation,0.019
+4,Choking,Drowning,0.0142
+4,Cuts,Burns,0.125
+4,Cuts,Choking,0.0625
+4,Cuts,Environment,0.0625
+4,Cuts,Injuries,0.6875
+4,Cuts,Fire,0.0625
+4,Damage to hearing,Choking,0.3571
+4,Damage to hearing,Injuries,0.6429
+4,Damage to sight,Damage to sight,0.5385
+4,Damage to sight,Choking,0.0769
+4,Damage to sight,Chemical,0.0769
+4,Damage to sight,Burns,0.1538
+4,Damage to sight,Strangulation,0.0769
+4,Damage to sight,Environment,0.0769
+4,Drowning,Drowning,0.7778
+4,Drowning,Injuries,0.1111
+4,Drowning,Chemical,0.1111
+4,Electric shock,Electric shock,0.9036
+4,Electric shock,Fire,0.0361
+4,Electric shock,Burns,0.006
+4,Electric shock,Injuries,0.0422
+4,Electric shock,Environment,0.006
+4,Electric shock,Chemical,0.006
+4,Entrapment,Choking,0.2857
+4,Entrapment,Strangulation,0.2143
+4,Entrapment,Injuries,0.3571
+4,Entrapment,Electric shock,0.0714
+4,Entrapment,Chemical,0.0714
+4,Environment,Electric shock,0.2105
+4,Environment,Environment,0.4386
+4,Environment,Burns,0.0088
+4,Environment,Chemical,0.1053
+4,Environment,Injuries,0.114
+4,Environment,Choking,0.0702
+4,Environment,Strangulation,0.0088
+4,Environment,Fire,0.0088
+4,Environment,Microbiological,0.0263
+4,Environment,Drowning,0.0088
+4,Fire,Injuries,0.4662
+4,Fire,Electric shock,0.3311
+4,Fire,Fire,0.1351
+4,Fire,Chemical,0.0135
+4,Fire,Environment,0.0203
+4,Fire,Burns,0.0203
+4,Fire,Choking,0.0135
+4,Health risk / other,Health risk / other,0.3636
+4,Health risk / other,Injuries,0.0909
+4,Health risk / other,Chemical,0.4545
+4,Health risk / other,Choking,0.0909
+4,Injuries,Injuries,0.8397
+4,Injuries,Choking,0.0591
+4,Injuries,Suffocation,0.0042
+4,Injuries,Drowning,0.0127
+4,Injuries,Fire,0.0127
+4,Injuries,Electric shock,0.0127
+4,Injuries,Cuts,0.0127
+4,Injuries,Strangulation,0.0169
+4,Injuries,Damage to sight,0.0042
+4,Injuries,Burns,0.0253
+4,Microbiological,Chemical,0.75
+4,Microbiological,Microbiological,0.25
+4,Strangulation,Suffocation,0.0303
+4,Strangulation,Injuries,0.1818
+4,Strangulation,Strangulation,0.4848
+4,Strangulation,Choking,0.2727
+4,Strangulation,Drowning,0.0303
+4,Suffocation,Choking,0.4545
+4,Suffocation,Suffocation,0.4091
+4,Suffocation,Strangulation,0.0455
+4,Suffocation,Injuries,0.0909

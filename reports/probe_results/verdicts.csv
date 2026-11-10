@@ -1,0 +1,83 @@
+probe,collection_id,verdict,claim,null_value,estimate,low,high,decision
+C10,all,baseline,Random neighbours set the chance level for every score,0.0,0.3008,0.2901,0.3102,"Read every score next to this chance level, never alone."
+C11,1,supported,Near-copies (similarity 0.95 or more) make the score look better,0.0,0.0717,0.0602,0.0833,"Report the score with and without near-copies, and keep the near-copy count next to it."
+C11,2,not supported,Near-copies (similarity 0.95 or more) make the score look better,0.0,0.0002,0.0,0.0005,"Report the score with and without near-copies, and keep the near-copy count next to it."
+C11,3,supported,Near-copies (similarity 0.95 or more) make the score look better,0.0,0.0635,0.0521,0.075,"Report the score with and without near-copies, and keep the near-copy count next to it."
+C11,4,not supported,Near-copies (similarity 0.95 or more) make the score look better,0.0,0.0015,0.0006,0.0025,"Report the score with and without near-copies, and keep the near-copy count next to it."
+C12,1,not available,Risk text in the question inflates the score,0.0,,,,Not applicable: this collection has no risk text on the library side.
+C12,2,supported,Risk text in the question inflates the score,0.0,0.1854,0.1709,0.2019,Never put risk text in a question. Only the valid score counts.
+C12,3,not available,Risk text in the question inflates the score,0.0,,,,Not applicable: this collection has no risk text on the library side.
+C12,4,supported,Risk text in the question inflates the score,0.0,0.1707,0.1574,0.1862,Never put risk text in a question. Only the valid score counts.
+C13,all,supported,"No dev alert is in any collection, and NumPy and ChromaDB agree",0.0,0.0,0.0,0.0,The library and dev are cleanly separated; the stored collections can be trusted.
+A1,all,baseline,Random pairs of library alerts have a typical similarity (a baseline for 'close'),0.0,0.0,0.0,0.0,Use these percentiles to judge how special a match is. A high similarity only means something above the 99th percentile.
+A2,1,supported,Unrelated library alerts still look alike (the space leans one way),0.0,0.3199,0.3148,0.3255,If supported: try centring (A3) before trusting raw similarity scores.
+A2,2,supported,Unrelated library alerts still look alike (the space leans one way),0.0,0.3456,0.34,0.3509,If supported: try centring (A3) before trusting raw similarity scores.
+A2,3,supported,Unrelated library alerts still look alike (the space leans one way),0.0,0.5401,0.5372,0.5431,If supported: try centring (A3) before trusting raw similarity scores.
+A2,4,supported,Unrelated library alerts still look alike (the space leans one way),0.0,0.5815,0.5784,0.5849,If supported: try centring (A3) before trusting raw similarity scores.
+A3,1,not supported,Centring the vectors improves precision@5,0.0,-0.0018,-0.0066,0.0025,Keep a fix only where its gain is clearly above zero and larger than one point (see the 'kept' column).
+A3,2,not supported,Centring the vectors improves precision@5,0.0,-0.0232,-0.0281,-0.0182,Keep a fix only where its gain is clearly above zero and larger than one point (see the 'kept' column).
+A3,3,not supported,Centring the vectors improves precision@5,0.0,0.0039,0.0002,0.0078,Keep a fix only where its gain is clearly above zero and larger than one point (see the 'kept' column).
+A3,4,not supported,Centring the vectors improves precision@5,0.0,-0.0262,-0.0324,-0.0201,Keep a fix only where its gain is clearly above zero and larger than one point (see the 'kept' column).
+D14,1,supported,"Even near-copies (0.95 or more) often share no danger, so voting has a ceiling",0.0,0.0617,0.0553,0.0678,"Do not expect vote accuracy above one minus this share, even for near-identical alerts."
+D14,2,not supported,"Even near-copies (0.95 or more) often share no danger, so voting has a ceiling",0.0,0.0017,0.0008,0.0028,"Do not expect vote accuracy above one minus this share, even for near-identical alerts."
+D14,3,supported,"Even near-copies (0.95 or more) often share no danger, so voting has a ceiling",0.0,0.0646,0.0585,0.0705,"Do not expect vote accuracy above one minus this share, even for near-identical alerts."
+D14,4,not supported,"Even near-copies (0.95 or more) often share no danger, so voting has a ceiling",0.0,0.0013,0.0005,0.0022,"Do not expect vote accuracy above one minus this share, even for near-identical alerts."
+D15,1,supported,The search beats luck for every danger type with at least thirty alerts,0.0,1.0,,,Treat the danger types where the whisker touches the chance mark as weak.
+D15,2,supported,The search beats luck for every danger type with at least thirty alerts,0.0,1.0,,,Treat the danger types where the whisker touches the chance mark as weak.
+D15,3,supported,The search beats luck for every danger type with at least thirty alerts,0.0,1.0,,,Treat the danger types where the whisker touches the chance mark as weak.
+D15,4,supported,The search beats luck for every danger type with at least thirty alerts,0.0,1.0,,,Treat the danger types where the whisker touches the chance mark as weak.
+D16,1,supported,The search beats luck in every big category,0.0,1.0,,,Look at the categories whose whisker touches the chance mark.
+D16,2,unclear,The search beats luck in every big category,0.0,0.9091,,,Look at the categories whose whisker touches the chance mark.
+D16,3,supported,The search beats luck in every big category,0.0,1.0,,,Look at the categories whose whisker touches the chance mark.
+D16,4,supported,The search beats luck in every big category,0.0,1.0,,,Look at the categories whose whisker touches the chance mark.
+D17,1,supported,The five neighbours cover more of a multi-danger alert's dangers than random neighbours,0.0,0.3297,0.2797,0.3827,Use all neighbours' dangers (not only the winner) when an alert may have several dangers.
+D17,2,supported,The five neighbours cover more of a multi-danger alert's dangers than random neighbours,0.0,0.2515,0.1898,0.313,Use all neighbours' dangers (not only the winner) when an alert may have several dangers.
+D17,3,supported,The five neighbours cover more of a multi-danger alert's dangers than random neighbours,0.0,0.318,0.2692,0.3698,Use all neighbours' dangers (not only the winner) when an alert may have several dangers.
+D17,4,supported,The five neighbours cover more of a multi-danger alert's dangers than random neighbours,0.0,0.254,0.1885,0.3158,Use all neighbours' dangers (not only the winner) when an alert may have several dangers.
+B4,1,supported,Thin descriptions score lower than normal ones,0.0,0.1054,0.0514,0.1622,"If supported, treat thin descriptions as low confidence."
+B4,2,unclear,Thin descriptions score lower than normal ones,0.0,0.0499,-0.0148,0.1175,"If supported, treat thin descriptions as low confidence."
+B4,3,supported,Thin descriptions score lower than normal ones,0.0,0.1408,0.0867,0.1999,"If supported, treat thin descriptions as low confidence."
+B4,4,supported,Thin descriptions score lower than normal ones,0.0,0.165,0.1099,0.2179,"If supported, treat thin descriptions as low confidence."
+B5,1,supported,The neighbours share the category much more than random library alerts do,0.0,0.7957,0.7878,0.8041,The category is already strongly present in the neighbours; see the comparison of text versus filter.
+B5,2,supported,The neighbours share the category much more than random library alerts do,0.0,0.7821,0.7728,0.7923,The category is already strongly present in the neighbours; see the comparison of text versus filter.
+B5,3,supported,The neighbours share the category much more than random library alerts do,0.0,0.7894,0.7808,0.7983,The category is already strongly present in the neighbours; see the comparison of text versus filter.
+B5,4,supported,The neighbours share the category much more than random library alerts do,0.0,0.7728,0.763,0.7831,The category is already strongly present in the neighbours; see the comparison of text versus filter.
+B5b,1,unclear,A category filter (with product + description text) beats putting the category in the text,0.0,-0.0033,-0.0213,0.016,"Choose by the larger score: category in the text, or product + description with a category filter."
+B5b,3,not supported,A category filter (with product + description text) beats putting the category in the text,0.0,-0.0193,-0.0347,-0.004,"Choose by the larger score: category in the text, or product + description with a category filter."
+B6,1,not supported,Alerts with generic words (same words as a library alert) score lower than the rest,0.0,-0.1367,-0.1696,-0.1051,"If supported, report the score without these alerts as well."
+B6,2,not supported,Alerts with generic words (same words as a library alert) score lower than the rest,0.0,-0.1382,-0.1727,-0.1021,"If supported, report the score without these alerts as well."
+B6,3,not supported,Alerts with generic words (same words as a library alert) score lower than the rest,0.0,-0.1154,-0.1493,-0.0827,"If supported, report the score without these alerts as well."
+B6,4,not supported,Alerts with generic words (same words as a library alert) score lower than the rest,0.0,-0.107,-0.1408,-0.0735,"If supported, report the score without these alerts as well."
+B7,1,unclear,Adding the product name to the question changes the score,0.0,-0.009,-0.026,0.006,"If supported, decide deliberately whether names belong in the question."
+B7,2,unclear,Adding the product name to the question changes the score,0.0,-0.002,-0.014,0.011,"If supported, decide deliberately whether names belong in the question."
+B7,3,unclear,Adding the product name to the question changes the score,0.0,-0.011,-0.027,0.005,"If supported, decide deliberately whether names belong in the question."
+B7,4,unclear,Adding the product name to the question changes the score,0.0,-0.003,-0.017,0.011,"If supported, decide deliberately whether names belong in the question."
+B8,1,not supported,The search works mainly because of the hint words (the score drops when they are removed),0.0,-0.0012,-0.0028,0.0002,"If the score barely moves, hints are not the reason the search works."
+B8,2,not supported,The search works mainly because of the hint words (the score drops when they are removed),0.0,0.0004,-0.0008,0.0017,"If the score barely moves, hints are not the reason the search works."
+B8,3,not supported,The search works mainly because of the hint words (the score drops when they are removed),0.0,0.0004,-0.0013,0.0022,"If the score barely moves, hints are not the reason the search works."
+B8,4,not supported,The search works mainly because of the hint words (the score drops when they are removed),0.0,0.0001,-0.0024,0.0024,"If the score barely moves, hints are not the reason the search works."
+B9,all,not run,Chemical dev alerts have neighbours that share the substance name,0.0,,,,Waiting for Dev: the substance list has not been approved.
+E18,1,supported,The score changes between the first and the last month with enough alerts,0.0,0.0859,0.0331,0.1372,"Dev covers almost one year only, so time effects stay hard to see."
+E18,2,supported,The score changes between the first and the last month with enough alerts,0.0,0.0871,0.0295,0.1447,"Dev covers almost one year only, so time effects stay hard to see."
+E18,3,supported,The score changes between the first and the last month with enough alerts,0.0,0.0879,0.0371,0.1385,"Dev covers almost one year only, so time effects stay hard to see."
+E18,4,supported,The score changes between the first and the last month with enough alerts,0.0,0.1026,0.0454,0.1571,"Dev covers almost one year only, so time effects stay hard to see."
+E19,1,supported,Neighbours come from the same country more often than chance,0.0,0.2863,0.2702,0.3027,"If supported, the writing style of a country is pulling matches together."
+E19,2,supported,Neighbours come from the same country more often than chance,0.0,0.1665,0.1526,0.181,"If supported, the writing style of a country is pulling matches together."
+E19,3,supported,Neighbours come from the same country more often than chance,0.0,0.2917,0.2752,0.3083,"If supported, the writing style of a country is pulling matches together."
+E19,4,supported,Neighbours come from the same country more often than chance,0.0,0.2219,0.2072,0.2375,"If supported, the writing style of a country is pulling matches together."
+E20,1,supported,Neighbours have the same alert type more often than chance,0.0,0.0133,0.0011,0.0258,"If supported, the alert type (not the product) is pulling matches together."
+E20,2,unclear,Neighbours have the same alert type more often than chance,0.0,0.0048,-0.0052,0.0141,"If supported, the alert type (not the product) is pulling matches together."
+E20,3,supported,Neighbours have the same alert type more often than chance,0.0,0.0164,0.0038,0.0298,"If supported, the alert type (not the product) is pulling matches together."
+E20,4,supported,Neighbours have the same alert type more often than chance,0.0,0.02,0.0079,0.0319,"If supported, the alert type (not the product) is pulling matches together."
+F21,1,supported,The search beats luck,0.0,0.4821,0.4675,0.4964,Compare the four collections in the ranking at the end.
+F21,2,supported,The search beats luck,0.0,0.4264,0.4068,0.4434,Compare the four collections in the ranking at the end.
+F21,3,supported,The search beats luck,0.0,0.4903,0.4748,0.5046,Compare the four collections in the ranking at the end.
+F21,4,supported,The search beats luck,0.0,0.4603,0.4417,0.4775,Compare the four collections in the ranking at the end.
+F22,1,not supported,Ten neighbours score higher than five,0.0,-0.0153,-0.0198,-0.0107,Use five neighbours unless ten clearly score higher.
+F22,2,not supported,Ten neighbours score higher than five,0.0,0.0031,-0.0011,0.0077,Use five neighbours unless ten clearly score higher.
+F22,3,not supported,Ten neighbours score higher than five,0.0,-0.0151,-0.02,-0.0105,Use five neighbours unless ten clearly score higher.
+F22,4,not supported,Ten neighbours score higher than five,0.0,-0.0027,-0.0074,0.0021,Use five neighbours unless ten clearly score higher.
+G25,1,baseline,A low best-match similarity warns that the answer is weak,0.0,,,,Mark the answer low confidence when the best match is below the suggested cut-off.
+G25,2,baseline,A low best-match similarity warns that the answer is weak,0.0,,,,Mark the answer low confidence when the best match is below the suggested cut-off.
+G25,3,baseline,A low best-match similarity warns that the answer is weak,0.0,,,,Mark the answer low confidence when the best match is below the suggested cut-off.
+G25,4,baseline,A low best-match similarity warns that the answer is weak,0.0,,,,Mark the answer low confidence when the best match is below the suggested cut-off.

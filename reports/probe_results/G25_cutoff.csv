@@ -1,0 +1,5 @@
+collection_id,suggested_cutoff,rule
+1,0.9069,the lowest similarity from which every higher decile scores at least the overall precision@5
+2,0.701,the lowest similarity from which every higher decile scores at least the overall precision@5
+3,0.8841,the lowest similarity from which every higher decile scores at least the overall precision@5
+4,0.8115,the lowest similarity from which every higher decile scores at least the overall precision@5
